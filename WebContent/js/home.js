@@ -5,26 +5,24 @@
 
 	searchTop("#tbody1");
 	$("#aMenu").click(function () {
-		var abc = $("#witchPage").val();
-        alert(abc);
         $("#witchPage").val("a");
         $("#aMenu").css("background-color","#48681A");
         $("#bMenu").css("background-color","");
         $("#articleCaption").css("display","block");
         $("#new_articleMenu, #top_articleMenu").css("display","block");
         $("#new_bookMenu, #top_bookMenu").css("display","none");
+        $("#pageNum0").val(1);
         search0("#tbody0");
         searchTop("#tbody1");
     });
 	$("#bMenu").click(function () {
         $("#witchPage").val("b");
-        var abc = $("#witchPage").val();
-        alert(abc);
         $("#aMenu").css("background-color","");
         $("#bMenu").css("background-color","#48681A");
         $("#articleCaption").css("display","none");
         $("#new_articleMenu, #top_articleMenu").css("display","none");
         $("#new_bookMenu, #top_bookMenu").css("display","block");
+        $("#pageNum0").val(1);
         search0("#tbody0");
         searchTop("#tbody1");
     });
@@ -120,38 +118,18 @@ function search0(tbodyId) {
 						+ "</ul>"
 						+ "</td></tr>";
 				}else{//最新书籍信息显示（一行显示6本，一页显示两行）
-					/*<tr>
-						<div class="col-md-2-y latis-left">
-							<a href="findPetByType?type=蜥蜴">
-								<img src="upload/image/xiyi.jpg" class="img-responsive"
-									style="width: 120px; height: 160px;" alt="">
-							</a>
-							<div class="special-info grid_1 simpleCart_shelfItem" width="130px"
-								height="40px">
-								<p><a href="findPetByType?type=蜥蜴" >蜥蜴</a></p>
-							</div>
-						</div>
-					</tr>*/
-					code += "<tr style='padding: 0px 0px; margin: 4px 0px 0px 0px;'>"
-						+ "<div style='position:relative;min-height:1px;padding-right:5px;padding-left:1px;float:left;width:16.66666667%;'>"
+					/*code += "<td style='position:relative;min-height:1px;padding-right:5px;padding-left:1px;float:left;width:16.66666667%; margin: 8px 0px 8px 0px;'>"
 						+ "<a href='"+a+"?bookId="+obj[i].bookId+"' target='_blank'>"
 						+ "<img src='"+obj[i].bookPhotoAddr+"' style='width:120px;height:160px;' alt='"+obj[i].bookTitle+"'></a>"
-						+ "<a href='"+a+"?bookId="+obj[i].bookId+"' target='_blank' style='font-size:14px;Color:#000000;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;' title='"+obj[i].bookTitle+"'>"
+						+ "<a href='"+a+"?bookId="+obj[i].bookId+"' target='_blank' style='text-align:center;font-size:14px;Color:#000000;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;' title='"+obj[i].bookTitle+"'>"
 						+ obj[i].bookTitle +"</a>"
-						+ "</div></tr>";
-					/*code += "<tr style='padding: 0px 0px; margin: 4px 0px 0px 0px;'><td>"
-						+ "<ul style='border-bottom: 1px solid #eee;border-left: 1px solid #DDDDDD;border-right: 1px solid #DDDDDD;padding-bottom: 8px;padding-top: 8px;padding-left: 5px;padding-right: 5px;margin: 0px;'>"
-						+ "<li style='position:relative;min-height:1px;padding-right:5px;padding-left:5px;float:left;width:75%;'>"
-						+ "<a href='"+a+"?resourceId="+obj[i].resourceId+"' target='_blank' style='font-size:14px;Color:#000000;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;' title='"+obj[i].articleTitle+"'>"
-						+ obj[i].articleTitle + "</a></li>"
-						+ "<li style='position:relative;min-height:1px;padding-right:5px;padding-left:5px;float:left;width:25%;'>"
-						+ "<div style='position:relative;min-height:1px;padding-right:5px;padding-left:1px;float:left;width:58.3333333%;'>"
-						+ "<font title='"+ obj[i].articleAuthor +"' style='display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#999999;'>" + obj[i].articleAuthor + "</font></div>"
-						+ "<div style='position:relative;min-height:1px;padding-right:5px;padding-left:1px;float:left;width:41.666666667%;'>"
-						+ "<font style='color:#999999;'>" + obj[i].publishTime + "</font></div></li>"
-						+ "<li style='clear:both;'></li>"
-						+ "</ul>"
-						+ "</td></tr>";*/
+						+ "</td>";*/
+					code += "<td class='tdcol2'>"
+						+ "<a href='"+a+"?bookId="+obj[i].bookId+"' target='_blank'>"
+						+ "<img src='"+obj[i].bookPhotoAddr+"' class='imgsize' alt='"+obj[i].bookTitle+"'></a>"
+						+ "<a href='"+a+"?bookId="+obj[i].bookId+"' target='_blank' class='astyle' title='"+obj[i].bookTitle+"'>"
+						+ obj[i].bookTitle +"</a>"
+						+ "</td>";
 				}
 			}
 			console.log(code);

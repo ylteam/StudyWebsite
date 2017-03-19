@@ -2,6 +2,8 @@ package com.tjnu.action;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -19,6 +21,7 @@ import com.tjnu.model.BookInfo;
 import com.tjnu.model.BrowseRecord;
 import com.tjnu.model.Comment;
 import com.tjnu.model.ResourceInfo;
+import com.tjnu.model.UserInfo;
 import com.tjnu.service.IResourceService;
 
 public class ResourceAction extends ActionSupport implements ServletRequestAware {
@@ -69,11 +72,33 @@ public class ResourceAction extends ActionSupport implements ServletRequestAware
 	}
 	//根据题目查找书
 	public void findBookByArticleTitle() throws IOException {
-		
+		String bookTitle = request.getParameter("bookTitle");
+		int pageSize = 12;
+		int curPage = 1;
+		Page<BookInfo> bookPage = new Page<BookInfo>(pageSize,curPage);
+		resourceService.findBookByBookTitle(bookTitle, bookPage);
+		String bookPageJson = JSON.toJSONString(bookPage,SerializerFeature.DisableCircularReferenceDetect);
+		HttpServletResponse response=ServletActionContext.getResponse();  
+		response.setContentType("text/html;charset=utf-8");
+		PrintWriter out = response.getWriter();  
+	    out.println(bookPageJson);  
+	    out.flush();  
+	    out.close();
 	}
 	//根据题目查找文章
 	public void findArticleByArticleTitle() throws IOException {
-		
+		String articleTitle = request.getParameter("articleTitle");
+		int pageSize = 12;
+		int curPage = 1;
+		Page<ResourceInfo> resourcePage = new Page<ResourceInfo>(pageSize,curPage);
+		resourceService.findResourceByArticleTitle(articleTitle, resourcePage);
+		String resourcePageJson = JSON.toJSONString(resourcePage,SerializerFeature.DisableCircularReferenceDetect);
+		HttpServletResponse response=ServletActionContext.getResponse();  
+		response.setContentType("text/html;charset=utf-8");
+		PrintWriter out = response.getWriter();  
+	    out.println(resourcePageJson);  
+	    out.flush();  
+	    out.close();
 	}
 	//书籍排行榜前10
 	public void bookTop10() throws IOException {
@@ -101,38 +126,126 @@ public class ResourceAction extends ActionSupport implements ServletRequestAware
 	public void updateBrowseNum() throws IOException {
 		
 	}
-	//显示文章详情
+	//显示文章详情----页面跳转前台做还是后台做？后台做返回字符串类型，前台做返回类型为void，未写完
 	public void showArticleDetail() throws IOException {
-		
+		String resourceIdStr = request.getParameter("resourceId");
+		int resourceId = Integer.parseInt(resourceIdStr);
+		resourceService.updateResourceBrowseNum(resourceId);//更新该文章的被浏览次数，即点击量
+		UserInfo user = (UserInfo) request.getSession().getAttribute("currentUser");
+		if(user != null){//当前为用户登录状态
+			String username = user.getUsername();
+			browseRecord = resourceService.findBrowseRecordByUsernameAndResourceId(username, resourceId);
+			if(browseRecord != null){//若该用户对该文章的曾经浏览过，更新该记录的浏览次数
+				int personBrowseNum = browseRecord.getPersonBrowseNum();
+				browseRecord.setPersonBrowseNum(personBrowseNum+1);
+				resourceService.updateBrowseRecord(browseRecord);
+			}else{//若该用户对该文章的没有浏览过，保存浏览记录
+				browseRecord.setResourceId(resourceId);
+				browseRecord.setUsername(username);
+				browseRecord.setPersonBrowseNum(1);
+				resourceService.saveBrowseRecord(browseRecord);
+			}
+		}
+		resource = resourceService.findResourceById(resourceId);
+		if(null != resource){
+			//return "showArticleDetail_sucess";
+		}else{
+			//return "showArticleDetail_error";
+		}
 	}
-	//显示书籍详情
+	//显示图书详情----页面跳转前台做还是后台做？后台做返回字符串类型，前台做返回类型为void，未写完
 	public void showBookDetail() throws IOException {
-		
+		String bookIdStr = request.getParameter("bookId");
+		int bookId = Integer.parseInt(bookIdStr);
+		resourceService.updateBookBrowseNum(bookId);//更新该图书的被浏览次数，即点击量
+		UserInfo user = (UserInfo) request.getSession().getAttribute("currentUser");
+		if(user != null){//当前为用户登录状态
+			String username = user.getUsername();
+			browseRecord = resourceService.findBrowseRecordByUsernameAndResourceId(username, bookId);
+			if(browseRecord != null){//若该用户对该图书的曾经浏览过，更新该记录的浏览次数
+				int personBrowseNum = browseRecord.getPersonBrowseNum();
+				browseRecord.setPersonBrowseNum(personBrowseNum+1);
+				resourceService.updateBrowseRecord(browseRecord);
+			}else{//若该用户对该图书的没有浏览过，保存浏览记录
+				browseRecord.setResourceId(bookId);
+				browseRecord.setUsername(username);
+				browseRecord.setPersonBrowseNum(1);
+				resourceService.saveBrowseRecord(browseRecord);
+			}
+		}
+		book = resourceService.findBookById(bookId);
+		if(null != resource){
+			//return "showBookDetail_sucess";
+		}else{
+			//return "showBookDetail_error";
+		}
 	}
 	//保存评论
 	public void saveComment() throws IOException {
-		
+		String resourceIdStr = request.getParameter("resourceId");
+		int resourceId = Integer.parseInt(resourceIdStr);
+		UserInfo user = (UserInfo) request.getSession().getAttribute("currentUser");
+		String username = user.getUsername();
+		comment.setResourceId(resourceId);
+		comment.setUsername(username);
+		Date date = new Date();
+		String submitTime = new SimpleDateFormat("yyyy-MM-dd").format(date);
+		comment.setSubmitTime(submitTime);
+		resourceService.saveComment(comment);
 	}
 	//用户浏览记录
 	public void showPersonalBrowseRecord() throws IOException {
 		
 	}
 	
-	//管理员新增文章或书
+	//管理员新增文章
 	public void saveResource() throws IOException {
-		
+		Date date = new Date();
+		String submitTime = new SimpleDateFormat("yyyy-MM-dd").format(date);
+		resource.setSubmitTime(submitTime);
+		resource.setBrowseNum(0);
+		resourceService.saveResource(resource);
 	}
-	//删除文章或书
+	//删除文章
 	public void deleteResource() throws IOException {
-		
+		resourceService.deleteResource(resource);
 	}
-	//查询书或文章
+	//查询文章----显示全部还是？看前台需要什么数据，是条件查询，还是分页显示全部
 	public void findResource() throws IOException {
 		
 	}
-	//修改更新书或文章内容
+	//修改更新文章内容----未写完，看前台传什么参数过来
 	public void updateResource() throws IOException {
+		String resourceIdStr = request.getParameter("resourceId");
+		int resourceId = Integer.parseInt(resourceIdStr);
+		ResourceInfo res = resourceService.findResourceById(resourceId);
+		int browseNum = res.getBrowseNum();
+		resource.setBrowseNum(browseNum);
+	}
+	
+	//管理员新增书
+	public void saveBook() throws IOException {
+		Date date = new Date();
+		String submitTime = new SimpleDateFormat("yyyy-MM-dd").format(date);
+		book.setSubmitTime(submitTime);
+		book.setBrowseNum(0);
+		resourceService.saveBook(book);
+	}
+	//删除书
+	public void deleteBook() throws IOException {
+		resourceService.deleteBook(book);
+	}
+	//查询书
+	public void findBook() throws IOException {
 		
+	}
+	//修改更新书内容----未写完，看前台传什么参数过来
+	public void updateBook() throws IOException {
+		String bookIdStr = request.getParameter("bookId");
+		int bookId = Integer.parseInt(bookIdStr);
+		BookInfo bo = resourceService.findBookById(bookId);
+		int browseNum = bo.getBrowseNum();
+		book.setBrowseNum(browseNum);
 	}
 	
 	@Override

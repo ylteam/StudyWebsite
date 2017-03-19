@@ -2,6 +2,8 @@ package com.tjnu.action;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -14,6 +16,8 @@ import org.springframework.stereotype.Controller;
 
 import com.tjnu.model.UserInfo;
 import com.tjnu.service.IUserService;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.opensymphony.xwork2.ActionSupport;
 
 @Controller
@@ -98,7 +102,27 @@ public class UserAction extends ActionSupport implements ServletRequestAware{
 	}
 	//重置密码
 	public void repassword() throws IOException {
-		
+		String username = request.getParameter("username");
+		String password = request.getParameter("password");
+		String rePassword = request.getParameter("rePassword");
+		UserInfo cutUser=userService.findUserByNameAndPassword(user);
+		String result = "";
+		if(null != cutUser){
+			cutUser.setPassword(rePassword);
+			userService.updateUser(cutUser);
+			result = "密码重置成功！";
+		}else{
+			result = "原始密码错误！";
+		}
+		Map map = new HashMap();
+		map.put("result", result);
+		String userJson = JSON.toJSONString(map,SerializerFeature.DisableCircularReferenceDetect);
+		HttpServletResponse response=ServletActionContext.getResponse();  
+		response.setContentType("text/html;charset=utf-8");
+		PrintWriter out = response.getWriter();  
+	    out.println(userJson);  
+	    out.flush();  
+	    out.close();
 	}
 	@Override
 	public void setServletRequest(HttpServletRequest request) {

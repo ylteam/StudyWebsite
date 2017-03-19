@@ -46,6 +46,9 @@ A:hover{font-size:14px;TEXT-DECORATION: underline;Color:#035D1C;}
 .right_lileft{font-size:14px;color:#4F9235;float:left;width:200px;height:30px; line-height:30px;}
 .right_liright{float:right;width:80px;font-size:12px;color:#aaaaaa;height:30px; line-height:30px;}
 
+.tdcol2{position:relative;min-height:1px;padding-right:5px;padding-left:1px;float:left;width:16.66666667%; margin: 8px 0px 8px 0px;}
+.imgsize{width:120px;height:160px;}
+.astyle{text-align:center;font-size:14px;Color:#000000;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 </style>
 </head>
 <body>
@@ -102,15 +105,15 @@ A:hover{font-size:14px;TEXT-DECORATION: underline;Color:#035D1C;}
 			<div style="width: 1100px; margin-top: 10px;">
 				<div class="col-md-9-y">
 				<table width="100%" cellpadding="0" cellspacing="0">
-					<caption id="new_bookMenu" style="display:none;color:#000000">最新书籍信息</caption>
-					<tr id="articleCaption">
+					<caption id="new_bookMenu" style="display:none;color:#333">最新图书信息</caption>
+					<tr>
 						<td width="" align="left" valign="top">
-							<div style="background-color: #ffffff; border: 1px solid #DDDDDD; text-align: left;">
+							<div id="articleCaption" style="background-color: #ffffff; border: 1px solid #DDDDDD; text-align: left;">
 								<div style="margin: 10px;">
 									<div style="color: #333; padding: 0px 0px 6px 0px; width: 260px; float: left;">
 										<!-- <a href="#" class="f12dh">农产品信息网</a> >  -->
 										<span id="new_articleMenu">最新文章信息</span>
-										<!-- <span id="new_bookMenu" style="display:none">最新书籍信息</span> -->
+										<!-- <span id="new_bookMenu" style="display:none">最新图书信息</span> -->
 									</div>
 									<!-- <div style="padding: 0px 0px 6px 0px; float: left;"></div>
 									<div style="float: right; padding: 0px 0px 6px 0px;">
@@ -147,77 +150,6 @@ A:hover{font-size:14px;TEXT-DECORATION: underline;Color:#035D1C;}
 						</td>
 					</tr>
 					<tbody id="tbody0">
-					<!-- <tr>
-						<div class="col-md-2-y ">
-							<a href="findPetByType?type=蜥蜴">
-								<img src="upload/image/xiyi.jpg" class="img-responsive"
-									style="width: 120px; height: 160px;" alt="">
-							</a>
-							<a href="findPetByType?type=蜥蜴" >蜥蜴</a>
-						</div>
-						<div class="col-md-2-y ">
-							<a href="findPetByType?type=蜥蜴">
-								<img src="upload/image/xiyi.jpg" class="img-responsive"
-									style="width: 120px; height: 160px;" alt="">
-							</a>
-							<div class="special-info grid_1 simpleCart_shelfItem" width="130px"
-								height="40px">
-								<p><a href="findPetByType?type=蜥蜴" >蜥蜴</a></p>
-							</div>
-						</div>
-						<div class="col-md-2-y ">
-							<a href="findPetByType?type=蜥蜴">
-								<img src="upload/image/xiyi.jpg" class="img-responsive"
-									style="width: 120px; height: 160px;" alt="">
-							</a>
-							<div class="special-info grid_1 simpleCart_shelfItem" width="130px"
-								height="40px">
-								<p><a href="findPetByType?type=蜥蜴" >蜥蜴</a></p>
-							</div>
-						</div>
-						<div class="col-md-2-y ">
-							<a href="findPetByType?type=蜥蜴">
-								<img src="upload/image/xiyi.jpg" class="img-responsive"
-									style="width: 120px; height: 160px;" alt="">
-							</a>
-							<div class="special-info grid_1 simpleCart_shelfItem" width="130px"
-								height="40px">
-								<p><a href="findPetByType?type=蜥蜴" >蜥蜴</a></p>
-							</div>
-						</div>
-						<div class="col-md-2-y ">
-							<a href="findPetByType?type=蜥蜴">
-								<img src="upload/image/xiyi.jpg" class="img-responsive"
-									style="width: 120px; height: 160px;" alt="">
-							</a>
-							<div class="special-info grid_1 simpleCart_shelfItem" width="130px"
-								height="40px">
-								<p><a href="findPetByType?type=蜥蜴" >蜥蜴</a></p>
-							</div>
-						</div>
-						<div class="col-md-2-y ">
-							<a href="findPetByType?type=蜥蜴">
-								<img src="upload/image/xiyi.jpg" class="img-responsive"
-									style="width: 120px; height: 160px;" alt="">
-							</a>
-							<div class="special-info grid_1 simpleCart_shelfItem" width="130px"
-								height="40px">
-								<p><a href="findPetByType?type=蜥蜴" >蜥蜴</a></p>
-							</div>
-						</div>
-					</tr>
-					<tr>
-						<div class="col-md-2-y latis-left">
-							<a href="findPetByType?type=蜥蜴">
-								<img src="upload/image/xiyi.jpg" class="img-responsive"
-									style="width: 120px; height: 160px;" alt="">
-							</a>
-							<div class="special-info grid_1 simpleCart_shelfItem" width="130px"
-								height="40px">
-								<p><a href="findPetByType?type=蜥蜴" >蜥蜴</a></p>
-							</div>
-						</div>
-					</tr> -->
 					</tbody>
 				</table>
 				<!--分页导航-->
@@ -279,7 +211,7 @@ A:hover{font-size:14px;TEXT-DECORATION: underline;Color:#035D1C;}
 									<div style="color: #333; padding: 0px 0px 6px 0px; float: left;">
 										<!-- <a href="#" class="f12dh">农产品信息网</a> >  -->
 										<span id="top_articleMenu">文章排行榜</span>
-										<span id="top_bookMenu" style="display:none">书籍排行榜</span>
+										<span id="top_bookMenu" style="display:none">图书排行榜</span>
 									</div>
 								</div>
 								<div class="clear"></div>
