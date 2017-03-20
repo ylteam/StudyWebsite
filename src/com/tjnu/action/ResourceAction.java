@@ -134,7 +134,7 @@ public class ResourceAction extends ActionSupport implements ServletRequestAware
 		UserInfo user = (UserInfo) request.getSession().getAttribute("currentUser");
 		if(user != null){//当前为用户登录状态
 			String username = user.getUsername();
-			browseRecord = resourceService.findBrowseRecordByUsernameAndResourceId(username, resourceId);
+			browseRecord = resourceService.findBrowseRecordByUsernameAndResourceId(username, resourceId, "0");//0文章或1图书
 			if(browseRecord != null){//若该用户对该文章的曾经浏览过，更新该记录的浏览次数
 				int personBrowseNum = browseRecord.getPersonBrowseNum();
 				browseRecord.setPersonBrowseNum(personBrowseNum+1);
@@ -142,6 +142,7 @@ public class ResourceAction extends ActionSupport implements ServletRequestAware
 			}else{//若该用户对该文章的没有浏览过，保存浏览记录
 				browseRecord.setResourceId(resourceId);
 				browseRecord.setUsername(username);
+				browseRecord.setResourceType("0");
 				browseRecord.setPersonBrowseNum(1);
 				resourceService.saveBrowseRecord(browseRecord);
 			}
@@ -161,7 +162,7 @@ public class ResourceAction extends ActionSupport implements ServletRequestAware
 		UserInfo user = (UserInfo) request.getSession().getAttribute("currentUser");
 		if(user != null){//当前为用户登录状态
 			String username = user.getUsername();
-			browseRecord = resourceService.findBrowseRecordByUsernameAndResourceId(username, bookId);
+			browseRecord = resourceService.findBrowseRecordByUsernameAndResourceId(username, bookId, "1");//0文章或1图书
 			if(browseRecord != null){//若该用户对该图书的曾经浏览过，更新该记录的浏览次数
 				int personBrowseNum = browseRecord.getPersonBrowseNum();
 				browseRecord.setPersonBrowseNum(personBrowseNum+1);
@@ -169,6 +170,7 @@ public class ResourceAction extends ActionSupport implements ServletRequestAware
 			}else{//若该用户对该图书的没有浏览过，保存浏览记录
 				browseRecord.setResourceId(bookId);
 				browseRecord.setUsername(username);
+				browseRecord.setResourceType("1");
 				browseRecord.setPersonBrowseNum(1);
 				resourceService.saveBrowseRecord(browseRecord);
 			}
@@ -184,10 +186,12 @@ public class ResourceAction extends ActionSupport implements ServletRequestAware
 	public void saveComment() throws IOException {
 		String resourceIdStr = request.getParameter("resourceId");
 		int resourceId = Integer.parseInt(resourceIdStr);
+		String resourceType = request.getParameter("resourceType");//0文章或1图书
 		UserInfo user = (UserInfo) request.getSession().getAttribute("currentUser");
 		String username = user.getUsername();
 		comment.setResourceId(resourceId);
 		comment.setUsername(username);
+		comment.setResourceType(resourceType);
 		Date date = new Date();
 		String submitTime = new SimpleDateFormat("yyyy-MM-dd").format(date);
 		comment.setSubmitTime(submitTime);

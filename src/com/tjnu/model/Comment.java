@@ -24,6 +24,8 @@ public class Comment implements Serializable {
 	private Integer resourceId;//资源编号
 	@Column(name = "username", length = 40)
 	private String username;//用户名
+	@Column(name = "resourceType", length = 2)
+	private String resourceType;//资源类型，0表示文章，1表示图书
 	@Column(name = "commentContent", length = 2000)
 	private String commentContent;//评论内容
 	@Column(name = "submitTime", length = 20)
@@ -46,6 +48,12 @@ public class Comment implements Serializable {
 	}
 	public synchronized void setUsername(String username) {
 		this.username = username;
+	}
+	public synchronized String getResourceType() {
+		return resourceType;
+	}
+	public synchronized void setResourceType(String resourceType) {
+		this.resourceType = resourceType;
 	}
 	public synchronized String getCommentContent() {
 		return commentContent;

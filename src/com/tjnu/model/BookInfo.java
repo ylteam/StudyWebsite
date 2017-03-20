@@ -26,6 +26,8 @@ private static final long serialVersionUID = 1L;
 	private String bookAuthor;//作者
 	@Column(name = "publishTime", length = 20)
 	private String publishTime;//图书出版时间
+	@Column(name = "isbnNum", length = 20)
+	private String isbnNum;//ISBN号
 	@Column(name = "bookContent", length = 8000)
 	private String bookContent;//图书简介
 	@Column(name = "bookPhotoAddr", length = 100)
@@ -60,6 +62,12 @@ private static final long serialVersionUID = 1L;
 	}
 	public synchronized void setPublishTime(String publishTime) {
 		this.publishTime = publishTime;
+	}
+	public synchronized String getIsbnNum() {
+		return isbnNum;
+	}
+	public synchronized void setIsbnNum(String isbnNum) {
+		this.isbnNum = isbnNum;
 	}
 	public synchronized String getBookContent() {
 		return bookContent;

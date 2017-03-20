@@ -156,10 +156,10 @@ public class ResourceServiceImpl implements IResourceService {
 	public void saveComment(Comment comment) {
 		commentDao.save(comment);
 	}
-	//根据资源id查找所有评论
+	//根据资源id、资源type查找所有评论
 	@Override
-	public List<Comment> findAllCommentByResourceId(int resourceId) {
-		return commentDao.find("from Comment c where c.resourceId=? order by submitTime desc", new Object[]{resourceId});
+	public List<Comment> findAllCommentByResourceId(int resourceId, String resourceType) {
+		return commentDao.find("from Comment c where c.resourceId=? and c.resourceType=? order by submitTime desc", new Object[]{resourceId, resourceType});
 	}
 
 	//保存新增浏览记录
@@ -172,10 +172,10 @@ public class ResourceServiceImpl implements IResourceService {
 	public List<BrowseRecord> findAllBrowseRecordByUsername(String username) {
 		return browseRecordDao.find("from BrowseRecord b where b.username=? order by personBrowseNum desc", new Object[]{username});
 	}
-	//根据用户名和资源id查找该用户是否存在对该资源的浏览记录
+	//根据用户名、资源id、资源type查找该用户是否存在对该资源的浏览记录
 	@Override
-	public BrowseRecord findBrowseRecordByUsernameAndResourceId(String username, int resourceId) {
-		return browseRecordDao.get("from BrowseRecord b where b.username=? and b.resourceId=?", new Object[]{username, resourceId});
+	public BrowseRecord findBrowseRecordByUsernameAndResourceId(String username, int resourceId, String resourceType) {
+		return browseRecordDao.get("from BrowseRecord b where b.username=? and b.resourceId=? and b.resourceType=?", new Object[]{username, resourceId, resourceType});
 	}
 	//更新某人某资源的浏览记录点击量
 	@Override

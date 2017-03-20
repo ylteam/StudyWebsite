@@ -25,8 +25,8 @@ public class BrowseRecord implements Serializable {
 	private Integer resourceId;//资源编号
 	@Column(name = "username", length = 40)
 	private String username;//用户名
-	/*@Column(name = "articleType", length = 2)
-	private String articleType;//资源类型，0表示文章，1表示书籍*/	
+	@Column(name = "resourceType", length = 2)
+	private String resourceType;//资源类型，0表示文章，1表示书籍
 	@Column(name = "browseNum")
 	private Integer personBrowseNum;//点击量
 	
@@ -48,12 +48,12 @@ public class BrowseRecord implements Serializable {
 	public synchronized void setUsername(String username) {
 		this.username = username;
 	}
-	/*public synchronized String getArticleType() {
-		return articleType;
+	public synchronized String getResourceType() {
+		return resourceType;
 	}
-	public synchronized void setArticleType(String articleType) {
-		this.articleType = articleType;
-	}*/
+	public synchronized void setResourceType(String resourceType) {
+		this.resourceType = resourceType;
+	}
 	public synchronized Integer getPersonBrowseNum() {
 		return personBrowseNum;
 	}

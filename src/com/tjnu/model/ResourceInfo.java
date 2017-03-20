@@ -28,7 +28,7 @@ public class ResourceInfo implements Serializable {
 	private String articleType;//资源类型，0表示文章，1表示图书*/
 	@Column(name = "publishTime", length = 20)
 	private String publishTime;//发表时间，图书出版时间
-	@Column(name = "articleContent", length = 8000)
+	@Column(name = "articleContent")
 	private String articleContent;//文章内容，图书简介
 	/*@Column(name = "articlePhotoAddr", length = 100)
 	private String articlePhotoAddr;//图书封面存储路径*/	

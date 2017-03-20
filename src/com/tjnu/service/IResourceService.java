@@ -44,13 +44,13 @@ public interface IResourceService {
 	
 	public void saveComment(Comment comment);
 	
-	public List<Comment> findAllCommentByResourceId(int resourceId);
+	public List<Comment> findAllCommentByResourceId(int resourceId, String resourceType);
 	
 	public void saveBrowseRecord(BrowseRecord browseRecord);
 	
 	public List<BrowseRecord> findAllBrowseRecordByUsername(String username);
 	
-	BrowseRecord findBrowseRecordByUsernameAndResourceId(String username, int resourceId);
+	BrowseRecord findBrowseRecordByUsernameAndResourceId(String username, int resourceId, String resourceType);
 	
 	public void updateBrowseRecord(BrowseRecord browseRecord);
 
