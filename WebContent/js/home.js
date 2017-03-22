@@ -83,7 +83,6 @@ function search0(tbodyId) {
 		},
 		dataType : "text",
 		success : function(data) {
-			alert(data)
 			var pageEntity = eval("(" + data + ")");
 			var obj = pageEntity.pageList; //结果集
 			//将除模板行的thead删除，即删除之前的数据重新加载
@@ -204,7 +203,6 @@ function searchTop(tbodyId) {
 		data : {},
 		dataType : "text",
 		success : function(data) {
-			alert(data)
 			var obj = eval("(" + data + ")");//结果集
 			var objLength = obj.length;
 			if(objLength > 10){//只取排名前10
@@ -261,7 +259,6 @@ function searchTop(tbodyId) {
 						+ "</td></tr>";
 				}
 			}
-			alert(code)
 			$(tbodyId).empty().append(code);
 		}
 	});

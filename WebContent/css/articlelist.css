@@ -1,0 +1,21 @@
+.articlelist-container{
+	padding-left:0;
+	text-align:center
+}
+
+.articlelist,.ranklist{
+	margin-top: 10px;
+	padding:0;
+	opacity:0.9
+}
+
+.nav{
+	opacity:0.9
+}
+
+#callBackPager{
+}
+
+.articletable td, .articletable th {
+	text-align: center
+}

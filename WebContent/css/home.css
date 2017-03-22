@@ -1,0 +1,9 @@
+.input-group{
+	margin-top:5%;
+	height:100%;
+}
+
+body{
+	background-image :url(../img/background.png);
+	background-size:cover; 
+}
