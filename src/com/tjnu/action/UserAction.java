@@ -51,21 +51,45 @@ public class UserAction extends ActionSupport implements ServletRequestAware{
 	}
 
 	//登录
-	public String login() throws Exception{
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	public void login() throws Exception{
 		HttpSession session=request.getSession();
 		UserInfo currentUser=userService.findUserByNameAndPassword(user);
+		
+		Map map = new HashMap();
 		if(currentUser!=null){
 			session.setAttribute("currentUser", currentUser);
-			if("0" == currentUser.getUserType()){
-				return "managerLogin_success";
+			map.put("isSuccess", true);
+			map.put("msg", "登录成功");
+			if("0".equals(currentUser.getUserType())){
+				map.put("role", "manager");
 			}else{
-				return "login_success";
+				map.put("role", "student");
 			}
 		}else{
-			error="用户名或密码错误";
-			return "login_error";
+			map.put("isSuccess", false);
+			map.put("msg", "用户名或密码错误！");
 		}
+		String userJson = JSON.toJSONString(map,SerializerFeature.DisableCircularReferenceDetect);
+		HttpServletResponse response=ServletActionContext.getResponse();  
+		response.setContentType("text/html;charset=utf-8");
+		PrintWriter out = response.getWriter();  
+	    out.println(userJson);  
+	    out.flush();  
+	    out.close();
+		
 	}
+	
+	public String logout() {
+		HttpSession session = request.getSession();
+		session.removeAttribute("currentUser");
+		return "logout";
+	}
+	
+	public String toRegister(){
+		return "register";
+	}
+	
 	//注册
 	public String register() throws Exception{
 		/*String username = user.getUsername();

@@ -3,11 +3,6 @@ body{
 	background-size:cover; 
 }
 
-.container{
-	opacity:0.9
-}
-
-.input-group{
-	margin-top:5%;
-	height:100%;
+.main{
+	background:#FFF;
 }

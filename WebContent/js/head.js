@@ -1,26 +1,30 @@
 $(function(){
-		
-	//登录
 	var emailPattern = /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
+	
+	//点击登录按钮清空错误提示
+	$("#loginButton").click(function(){
+		$("#errorMsg").css("display", "none");
+	})
+	
+	//登录
 	$("#login").click(function(){
-		var email = $("#email").val();
+		var username = $("#username").val();
 		var password = $("#password").val();
 		var noProblem = true;
-
-        if (email == "" || password == "") {
-            $("#errorMsg").html("请将邮箱和密码填写完整！").css("display", "block");
-            noProblem = false;
-        }else if (!emailPattern.test(email)) {
-            $("#errorMsg").html("邮箱格式不正确！").css("display", "block");
+		
+        if (username == "" || password == "") {
+            $("#errorMsg").html("请将用户名和密码填写完整！").css("display", "block");
             noProblem = false;
         }
         
         if(noProblem){
-        	$.post("user_login.action", {"user.email": email,"user.password":password}, function (result) {
-    			if(result.isSuccess){
-    				window.location.href = "/BookStore"
+        	$.post("user_login.action", {"user.username": username,"user.password":password}, function (result) {
+        		var obj = eval("("+result+")");
+        		
+    			if(obj.isSuccess){
+    				window.location.href = "/StudyWebsite"
     			}else{
-    				$("#errorMsg").html(result.msg).css("display","block");
+    				$("#errorMsg").html(obj.msg).css("display","block");
     			}
     		})
         }

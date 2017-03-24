@@ -4,11 +4,11 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>首页</title>
-	<script type="text/javascript" src="../js/jquery.min.js"></script>
-	<script type="text/javascript" src="../js/bootstrap.min.js"></script>
-	<link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
-	<link rel="stylesheet" type="text/css" href="../css/home.css">
-	<script type="text/javascript" src="../js/home.js"></script>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/bootstrap.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="css/home.css">
+	<script type="text/javascript" src="js/home.js"></script>
 </head>
 <body>
 	<div align="center">
@@ -16,13 +16,13 @@
 			<div style="width: 1100px; height: 80px; margin-right: 5px;">
 				<form action="" method="post" style="border: 0px; padding: 0px;">
 					<div style="float: left; width: 550px; text-align: left; margin-top: 1px;">
-						<img src="../img/logo.png" border="0" alt="中学生学习交流网" />
+						<img src="img/logo.png" border="0" alt="中学生学习交流网" />
 					</div>
 					<div style="float: right; width: 200px; margin-top: 4px; text-align: right;">
 						<div style="float: right; height: 30px; text-align: right;">
-							<a href="jsp/login.jsp"><img src="../img/login.png" style="border:0px;"></a></div>
+							<a href="jsp/login.jsp"><img src="img/login.png" style="border:0px;"></a></div>
 						<div style="float: right; height: 30px; margin-top: 2px; text-align: right;">
-							<a href="jsp/register.jsp"><img src="../img/register.png" style="border:0px;"></a></div>
+							<a href="jsp/register.jsp"><img src="img/register.png" style="border:0px;"></a></div>
 					</div>
 					<div style="float: left; width: 260px; text-align: right; margin-top: 20px;">
 						<input id="key" type="text" name="key" maxlength="100"

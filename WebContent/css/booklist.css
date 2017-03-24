@@ -1,13 +1,13 @@
-.articlelist-container{
+.booklist-container{
 	padding-left:0;
 	text-align:center
 }
 
-.articlelist,.articleRankList{
+.booklist,.bookRankList{
 	margin-top: 10px;
 	padding:0;
 }
 
-.articletable td, .articletable th {
+.booktable td, .booktable th {
 	text-align: center
 }

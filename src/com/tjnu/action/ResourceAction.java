@@ -126,8 +126,8 @@ public class ResourceAction extends ActionSupport implements ServletRequestAware
 	public void updateBrowseNum() throws IOException {
 		
 	}
-	//显示文章详情----页面跳转前台做还是后台做？后台做返回字符串类型，前台做返回类型为void，未写完
-	public void showArticleDetail() throws IOException {
+	//显示文章详情
+	public String showArticleDetail() throws IOException {
 		String resourceIdStr = request.getParameter("resourceId");
 		int resourceId = Integer.parseInt(resourceIdStr);
 		resourceService.updateResourceBrowseNum(resourceId);//更新该文章的被浏览次数，即点击量
@@ -149,13 +149,14 @@ public class ResourceAction extends ActionSupport implements ServletRequestAware
 		}
 		resource = resourceService.findResourceById(resourceId);
 		if(null != resource){
-			//return "showArticleDetail_sucess";
+			request.setAttribute("article", resource);
+			return "showArticleDetail_success";
 		}else{
-			//return "showArticleDetail_error";
+			return "showArticleDetail_error";
 		}
 	}
-	//显示图书详情----页面跳转前台做还是后台做？后台做返回字符串类型，前台做返回类型为void，未写完
-	public void showBookDetail() throws IOException {
+	//显示图书详情
+	public String showBookDetail() throws IOException {
 		String bookIdStr = request.getParameter("bookId");
 		int bookId = Integer.parseInt(bookIdStr);
 		resourceService.updateBookBrowseNum(bookId);//更新该图书的被浏览次数，即点击量
@@ -176,10 +177,11 @@ public class ResourceAction extends ActionSupport implements ServletRequestAware
 			}
 		}
 		book = resourceService.findBookById(bookId);
-		if(null != resource){
-			//return "showBookDetail_sucess";
+		if(null != book){
+			request.setAttribute("book", book);
+			return "showBookDetail_success";
 		}else{
-			//return "showBookDetail_error";
+			return "showBookDetail_error";
 		}
 	}
 	//保存评论

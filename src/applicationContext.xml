@@ -16,13 +16,14 @@
     <!-- 定义数据源 -->
     <bean id="dataSource"
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-		<property name="driverClassName"
-			value="com.microsoft.sqlserver.jdbc.SQLServerDriver">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver">
 		</property>
-		<property name="url"
-			value="jdbc:sqlserver://localhost:1433;database=StudyWebsite">
+		<property name="url">
+			<value>
+			    jdbc:mysql://localhost:3306/StudyWebsite?useUnicode=true&amp;characterEncoding=utf-8
+			  </value>
 		</property>
-		<property name="username" value="sa"></property>
+		<property name="username" value="root"></property>
 		<property name="password" value="123456"></property>
 	</bean>
     <!-- session工厂 -->  
