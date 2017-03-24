@@ -6,3 +6,13 @@ body{
 .container{
 	opacity:0.95
 }
+
+.panel{
+	padding:0;
+	text-align:center
+}
+
+.errorMsg{
+	display: none;
+	color: red;
+}

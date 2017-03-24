@@ -2424,22 +2424,6 @@ p.product_descr {
 	margin: 8% 0 4%;
 }
 
-.btn_form a {
-	font-family: 'Open Sans', sans-serif;
-	cursor: pointer;
-	border: none;
-	outline: none;
-	display: inline-block;
-	font-size: 1em;
-	padding: 10px 34px;
-	background: #ff6978;
-	color: #fff;
-	text-transform: uppercase;
-	-webkit-transition: all 0.3s ease-in-out;
-	-moz-transition: all 0.3s ease-in-out;
-	-o-transition: all 0.3s ease-in-out;
-	transition: all 0.3s ease-in-out;
-}
 
 .btn_form a:hover {
 	background: #00405d;
@@ -2565,7 +2549,6 @@ label {
 .registration_form input[type="text"], .registration_form input[type="email"],
 	.registration_form input[type="tel"], .registration_form input[type="password"]
 	{
-	padding: 8px;
 	display: block;
 	width: 100%;
 	outline: none;
@@ -2577,25 +2560,6 @@ label {
 	background: #FFFFFF;
 	border: 1px solid rgb(231, 231, 231);
 	font-weight: normal;
-}
-
-.registration_form input[type="submit"] {
-	-webkit-appearance: none;
-	font-family: 'Open Sans', sans-serif;
-	color: #ffffff;
-	text-transform: capitalize;
-	display: inline-block;
-	background: #ff6978;
-	padding: 10px 20px;
-	transition: 0.5s ease;
-	-moz-transition: 0.5s ease;
-	-o-transition: 0.5s ease;
-	-webkit-transition: 0.5s ease;
-	cursor: pointer;
-	border: none;
-	outline: none;
-	font-size: 1em;
-	margin-bottom: 5px;
 }
 
 .registration_form input[type="submit"]:hover {

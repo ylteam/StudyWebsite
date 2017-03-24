@@ -91,38 +91,32 @@ public class UserAction extends ActionSupport implements ServletRequestAware{
 	}
 	
 	//注册
-	public String register() throws Exception{
-		/*String username = user.getUsername();
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	public void register() throws Exception{
+		String username = user.getUsername();
+		System.out.println(username);
+		System.out.println(user.getPassword());
+		System.out.println(user.getEmail());
+		
+		Map map = new HashMap();
 		UserInfo user1 = userService.findUserByUsername(username);
-		if(null == user1){
+		if(user1 != null){
+			map.put("isSuccess",false);
+			map.put("msg", "用户名已存在");
+		}else{
+			user.setUserType("1");
 			userService.saveUser(user);
-			return "register_success";
-		}else{
-			error="用户名已存在";
-			return "register_error";
-		}*/
-		user.setUserType("1");
-		userService.saveUser(user);
-		error="注册成功！";
-		return "register_success";
-	}
-	//异步检测用户名是否已存在
-	public void verifyUsername() throws IOException{
-		String username = request.getParameter("username");
-		UserInfo user1 = userService.findUserByUsername(username);
-		String resultData;
-		if(null == user1){
-			resultData = "Y";
-		}else{
-			resultData = "N";
-			error="用户名已存在";
+			map.put("isSuccess", true);
+			map.put("msg", "注册成功");
 		}
+		String mapJson = JSON.toJSONString(map,SerializerFeature.DisableCircularReferenceDetect);
 		HttpServletResponse response=ServletActionContext.getResponse();  
 		response.setContentType("text/html;charset=utf-8");
-		PrintWriter out = response.getWriter(); 
-        out.write(resultData);
-        out.flush();
-        out.close();
+		PrintWriter out = response.getWriter();  
+	    out.println(mapJson);  
+	    out.flush();  
+	    out.close();
+		
 	}
 	//重置密码
 	public void repassword() throws IOException {
