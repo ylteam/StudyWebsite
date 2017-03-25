@@ -4,7 +4,9 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -12,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.interceptor.ServletRequestAware;
+import org.springframework.stereotype.Controller;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.serializer.SerializerFeature;
@@ -23,9 +26,9 @@ import com.tjnu.model.Comment;
 import com.tjnu.model.ResourceInfo;
 import com.tjnu.model.UserInfo;
 import com.tjnu.service.IResourceService;
-
+@Controller
 public class ResourceAction extends ActionSupport implements ServletRequestAware {
-
+//个人浏览记录、上传书的图片、上传文件还未做
 	private static final long serialVersionUID = 1L;
 
 	private HttpServletRequest request;
@@ -37,6 +40,31 @@ public class ResourceAction extends ActionSupport implements ServletRequestAware
 	private BookInfo book;
 	private Comment comment;
 	private BrowseRecord browseRecord;
+	
+	public ResourceInfo getResource() {
+		return resource;
+	}
+	public void setResource(ResourceInfo resource) {
+		this.resource = resource;
+	}
+	public BookInfo getBook() {
+		return book;
+	}
+	public void setBook(BookInfo book) {
+		this.book = book;
+	}
+	public Comment getComment() {
+		return comment;
+	}
+	public void setComment(Comment comment) {
+		this.comment = comment;
+	}
+	public BrowseRecord getBrowseRecord() {
+		return browseRecord;
+	}
+	public void setBrowseRecord(BrowseRecord browseRecord) {
+		this.browseRecord = browseRecord;
+	}
 
 	// 展示所有的书
 	public void showAllBooks() throws IOException {
@@ -75,8 +103,10 @@ public class ResourceAction extends ActionSupport implements ServletRequestAware
 	// 根据题目查找书
 	public void findBookByArticleTitle() throws IOException {
 		String bookTitle = request.getParameter("bookTitle");
-		int pageSize = 12;
-		int curPage = 1;
+		String pageSizeStr = request.getParameter("pageSize");
+		String curPageStr = request.getParameter("curPage");
+		int pageSize = Integer.parseInt(pageSizeStr);
+		int curPage = Integer.parseInt(curPageStr);
 		Page<BookInfo> bookPage = new Page<BookInfo>(pageSize, curPage);
 		resourceService.findBookByBookTitle(bookTitle, bookPage);
 		String bookPageJson = JSON.toJSONString(bookPage, SerializerFeature.DisableCircularReferenceDetect);
@@ -91,8 +121,10 @@ public class ResourceAction extends ActionSupport implements ServletRequestAware
 	// 根据题目查找文章
 	public void findArticleByArticleTitle() throws IOException {
 		String articleTitle = request.getParameter("articleTitle");
-		int pageSize = 12;
-		int curPage = 1;
+		String pageSizeStr = request.getParameter("pageSize");
+		String curPageStr = request.getParameter("curPage");
+		int pageSize = Integer.parseInt(pageSizeStr);
+		int curPage = Integer.parseInt(curPageStr);
 		Page<ResourceInfo> resourcePage = new Page<ResourceInfo>(pageSize, curPage);
 		resourceService.findResourceByArticleTitle(articleTitle, resourcePage);
 		String resourcePageJson = JSON.toJSONString(resourcePage, SerializerFeature.DisableCircularReferenceDetect);
@@ -198,19 +230,52 @@ public class ResourceAction extends ActionSupport implements ServletRequestAware
 	}
 
 	// 保存评论
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public void saveComment() throws IOException {
 		String resourceIdStr = request.getParameter("resourceId");
 		int resourceId = Integer.parseInt(resourceIdStr);
 		String resourceType = request.getParameter("resourceType");// 0文章或1图书
+		String commentContent = request.getParameter("commentContent");
 		UserInfo user = (UserInfo) request.getSession().getAttribute("currentUser");
-		String username = user.getUsername();
-		comment.setResourceId(resourceId);
-		comment.setUsername(username);
-		comment.setResourceType(resourceType);
-		Date date = new Date();
-		String submitTime = new SimpleDateFormat("yyyy-MM-dd").format(date);
-		comment.setSubmitTime(submitTime);
-		resourceService.saveComment(comment);
+		Map map = new HashMap();
+		if (user != null) {// 当前为用户登录状态
+			String username = user.getUsername();
+			comment.setResourceId(resourceId);
+			comment.setUsername(username);
+			comment.setResourceType(resourceType);
+			comment.setCommentContent(commentContent);
+			Date date = new Date();
+			String submitTime = new SimpleDateFormat("yyyy-MM-dd").format(date);
+			comment.setSubmitTime(submitTime);
+			resourceService.saveComment(comment);
+			map.put("isSuccess", true);
+			map.put("msg", "保存成功");
+		}else{
+			map.put("isSuccess", false);
+			map.put("msg", "登录后才能评论");
+		}
+		String commentJson = JSON.toJSONString(map,SerializerFeature.DisableCircularReferenceDetect);
+		HttpServletResponse response=ServletActionContext.getResponse();  
+		response.setContentType("text/html;charset=utf-8");
+		PrintWriter out = response.getWriter();  
+	    out.println(commentJson);  
+	    out.flush();  
+	    out.close();
+	}
+	
+	// 根据id和type查询评论
+	public void showComment() throws IOException {
+		String commentIdStr = request.getParameter("commentId");
+		String resourceType = request.getParameter("resourceType");
+		int commentId = Integer.parseInt(commentIdStr);
+		List<Comment> list = resourceService.findAllCommentByResourceId(commentId, resourceType);
+		String commentJson = JSON.toJSONString(list,SerializerFeature.DisableCircularReferenceDetect);
+		HttpServletResponse response=ServletActionContext.getResponse();  
+		response.setContentType("text/html;charset=utf-8");
+		PrintWriter out = response.getWriter();  
+	    out.println(commentJson);  
+	    out.flush();  
+	    out.close();
 	}
 
 	// 用户浏览记录
@@ -219,12 +284,32 @@ public class ResourceAction extends ActionSupport implements ServletRequestAware
 	}
 
 	// 管理员新增文章
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public void saveResource() throws IOException {
+		String articleTitle = request.getParameter("articleTitle");
+		String articleAuthor = request.getParameter("articleAuthor");
+		String publishTime = request.getParameter("publishTime");
+		String articleContent = request.getParameter("articleContent");
+		resource.setArticleTitle(articleTitle);
+		resource.setArticleAuthor(articleAuthor);
+		resource.setPublishTime(publishTime);
+		resource.setArticleContent(articleContent);
 		Date date = new Date();
 		String submitTime = new SimpleDateFormat("yyyy-MM-dd").format(date);
 		resource.setSubmitTime(submitTime);
 		resource.setBrowseNum(0);
 		resourceService.saveResource(resource);
+		//返回保存成功提示
+		Map map = new HashMap();
+		map.put("isSuccess", true);
+		map.put("msg", "保存成功");
+		String resourceJson = JSON.toJSONString(map,SerializerFeature.DisableCircularReferenceDetect);
+		HttpServletResponse response=ServletActionContext.getResponse();  
+		response.setContentType("text/html;charset=utf-8");
+		PrintWriter out = response.getWriter();  
+		out.println(resourceJson);  
+		out.flush();  
+		out.close();
 	}
 
 	// 删除文章
@@ -232,27 +317,76 @@ public class ResourceAction extends ActionSupport implements ServletRequestAware
 		resourceService.deleteResource(resource);
 	}
 
-	// 查询文章----显示全部还是？看前台需要什么数据，是条件查询，还是分页显示全部
+	// 查询文章----显示全部还是？看前台需要什么数据，是条件查询，还是分页显示全部---可使用上面的根据题目查找方法
 	public void findResource() throws IOException {
 
 	}
 
 	// 修改更新文章内容----未写完，看前台传什么参数过来
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public void updateResource() throws IOException {
 		String resourceIdStr = request.getParameter("resourceId");
+		String articleTitle = request.getParameter("articleTitle");
+		String articleAuthor = request.getParameter("articleAuthor");
+		String publishTime = request.getParameter("publishTime");
+		String articleContent = request.getParameter("articleContent");
 		int resourceId = Integer.parseInt(resourceIdStr);
+		resource.setResourceId(resourceId);
+		resource.setArticleTitle(articleTitle);
+		resource.setArticleAuthor(articleAuthor);
+		resource.setPublishTime(publishTime);
+		resource.setArticleContent(articleContent);
 		ResourceInfo res = resourceService.findResourceById(resourceId);
+		resource.setSubmitTime(res.getSubmitTime());
 		int browseNum = res.getBrowseNum();
 		resource.setBrowseNum(browseNum);
+		resourceService.updateResource(resource);
+		//返回修改成功提示
+		Map map = new HashMap();
+		map.put("isSuccess", true);
+		map.put("msg", "修改保存成功");
+		String resourceJson = JSON.toJSONString(map,SerializerFeature.DisableCircularReferenceDetect);
+		HttpServletResponse response=ServletActionContext.getResponse();  
+		response.setContentType("text/html;charset=utf-8");
+		PrintWriter out = response.getWriter();  
+	    out.println(resourceJson);  
+	    out.flush();  
+	    out.close();
 	}
 
 	// 管理员新增书
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public void saveBook() throws IOException {
+		String bookTitle = request.getParameter("bookTitle");
+		String bookAuthor = request.getParameter("bookAuthor");
+		String publishTime = request.getParameter("publishTime");
+		String isbnNum = request.getParameter("isbnNum");
+		String bookContent = request.getParameter("bookContent");
+		String bookPhotoAddr = request.getParameter("bookPhotoAddr");
+		String bookAttachmentAddr = request.getParameter("bookAttachmentAddr");
+		book.setBookTitle(bookTitle);
+		book.setBookAuthor(bookAuthor);
+		book.setPublishTime(publishTime);
+		book.setIsbnNum(isbnNum);
+		book.setBookContent(bookContent);
+		book.setBookPhotoAddr(bookPhotoAddr);
+		book.setBookAttachmentAddr(bookAttachmentAddr);
 		Date date = new Date();
 		String submitTime = new SimpleDateFormat("yyyy-MM-dd").format(date);
 		book.setSubmitTime(submitTime);
 		book.setBrowseNum(0);
 		resourceService.saveBook(book);
+		//返回保存成功提示
+		Map map = new HashMap();
+		map.put("isSuccess", true);
+		map.put("msg", "保存成功");
+		String bookJson = JSON.toJSONString(map,SerializerFeature.DisableCircularReferenceDetect);
+		HttpServletResponse response=ServletActionContext.getResponse();  
+		response.setContentType("text/html;charset=utf-8");
+		PrintWriter out = response.getWriter();  
+	    out.println(bookJson);  
+	    out.flush();  
+	    out.close();
 	}
 
 	// 删除书
@@ -260,18 +394,47 @@ public class ResourceAction extends ActionSupport implements ServletRequestAware
 		resourceService.deleteBook(book);
 	}
 
-	// 查询书
+	// 查询书---可使用上面的根据题目查找方法
 	public void findBook() throws IOException {
 
 	}
 
 	// 修改更新书内容----未写完，看前台传什么参数过来
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public void updateBook() throws IOException {
 		String bookIdStr = request.getParameter("bookId");
+		String bookTitle = request.getParameter("bookTitle");
+		String bookAuthor = request.getParameter("bookAuthor");
+		String publishTime = request.getParameter("publishTime");
+		String isbnNum = request.getParameter("isbnNum");
+		String bookContent = request.getParameter("bookContent");
+		String bookPhotoAddr = request.getParameter("bookPhotoAddr");
+		String bookAttachmentAddr = request.getParameter("bookAttachmentAddr");
 		int bookId = Integer.parseInt(bookIdStr);
+		book.setBookId(bookId);
+		book.setBookTitle(bookTitle);
+		book.setBookAuthor(bookAuthor);
+		book.setPublishTime(publishTime);
+		book.setIsbnNum(isbnNum);
+		book.setBookContent(bookContent);
+		book.setBookPhotoAddr(bookPhotoAddr);
+		book.setBookAttachmentAddr(bookAttachmentAddr);
 		BookInfo bo = resourceService.findBookById(bookId);
+		book.setSubmitTime(bo.getSubmitTime());
 		int browseNum = bo.getBrowseNum();
 		book.setBrowseNum(browseNum);
+		resourceService.updateBook(book);
+		//返回修改成功提示
+		Map map = new HashMap();
+		map.put("isSuccess", true);
+		map.put("msg", "修改保存成功");
+		String bookJson = JSON.toJSONString(map,SerializerFeature.DisableCircularReferenceDetect);
+		HttpServletResponse response=ServletActionContext.getResponse();  
+		response.setContentType("text/html;charset=utf-8");
+		PrintWriter out = response.getWriter();  
+	    out.println(bookJson);  
+	    out.flush();  
+	    out.close();
 	}
 
 	@Override

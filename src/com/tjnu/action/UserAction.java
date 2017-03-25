@@ -34,20 +34,12 @@ public class UserAction extends ActionSupport implements ServletRequestAware{
 	private IUserService userService;
 	
 	private UserInfo user;
-	private String error;
 	
 	public UserInfo getUser() {
 		return user;
 	}
 	public void setUser(UserInfo user) {
 		this.user = user;
-	}
-	
-	public String getError() {
-		return error;
-	}
-	public void setError(String error) {
-		this.error = error;
 	}
 
 	//登录
@@ -119,21 +111,24 @@ public class UserAction extends ActionSupport implements ServletRequestAware{
 		
 	}
 	//重置密码
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public void repassword() throws IOException {
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
 		String rePassword = request.getParameter("rePassword");
+		user.setUsername(username);
+		user.setPassword(password);
 		UserInfo cutUser=userService.findUserByNameAndPassword(user);
-		String result = "";
+		Map map = new HashMap();
 		if(null != cutUser){
 			cutUser.setPassword(rePassword);
 			userService.updateUser(cutUser);
-			result = "密码重置成功！";
+			map.put("isSuccess", true);
+			map.put("msg", "密码重置成功");
 		}else{
-			result = "原始密码错误！";
+			map.put("isSuccess", false);
+			map.put("msg", "原始密码错误");
 		}
-		Map map = new HashMap();
-		map.put("result", result);
 		String userJson = JSON.toJSONString(map,SerializerFeature.DisableCircularReferenceDetect);
 		HttpServletResponse response=ServletActionContext.getResponse();  
 		response.setContentType("text/html;charset=utf-8");
