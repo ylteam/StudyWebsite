@@ -1,5 +1,8 @@
 package com.tjnu.action;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
@@ -7,14 +10,18 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.interceptor.ServletRequestAware;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.serializer.SerializerFeature;
@@ -40,6 +47,50 @@ public class ResourceAction extends ActionSupport implements ServletRequestAware
 	private BookInfo book;
 	private Comment comment;
 	private BrowseRecord browseRecord;
+	
+	private File file;
+	private String fileFileName;
+    private String fileFileContentType;
+    private File file1;
+	private String file1FileName;
+    private String file1FileContentType;
+	
+	public File getFile() {
+		return file;
+	}
+	public void setFile(File file) {
+		this.file = file;
+	}
+	public String getFileFileName() {
+		return fileFileName;
+	}
+	public void setFileFileName(String fileFileName) {
+		this.fileFileName = fileFileName;
+	}
+	public String getFileFileContentType() {
+		return fileFileContentType;
+	}
+	public void setFileFileContentType(String fileFileContentType) {
+		this.fileFileContentType = fileFileContentType;
+	}
+	public File getFile1() {
+		return file1;
+	}
+	public void setFile1(File file1) {
+		this.file1 = file1;
+	}
+	public String getFile1FileName() {
+		return file1FileName;
+	}
+	public void setFile1FileName(String file1FileName) {
+		this.file1FileName = file1FileName;
+	}
+	public String getFile1FileContentType() {
+		return file1FileContentType;
+	}
+	public void setFile1FileContentType(String file1FileContentType) {
+		this.file1FileContentType = file1FileContentType;
+	}
 	
 	public ResourceInfo getResource() {
 		return resource;
@@ -355,38 +406,87 @@ public class ResourceAction extends ActionSupport implements ServletRequestAware
 	}
 
 	// 管理员新增书
-	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@SuppressWarnings({ "rawtypes", "unchecked", "resource" })
 	public void saveBook() throws IOException {
-		String bookTitle = request.getParameter("bookTitle");
-		String bookAuthor = request.getParameter("bookAuthor");
-		String publishTime = request.getParameter("publishTime");
-		String isbnNum = request.getParameter("isbnNum");
-		String bookContent = request.getParameter("bookContent");
-		String bookPhotoAddr = request.getParameter("bookPhotoAddr");
-		String bookAttachmentAddr = request.getParameter("bookAttachmentAddr");
-		book.setBookTitle(bookTitle);
-		book.setBookAuthor(bookAuthor);
-		book.setPublishTime(publishTime);
-		book.setIsbnNum(isbnNum);
-		book.setBookContent(bookContent);
-		book.setBookPhotoAddr(bookPhotoAddr);
-		book.setBookAttachmentAddr(bookAttachmentAddr);
-		Date date = new Date();
-		String submitTime = new SimpleDateFormat("yyyy-MM-dd").format(date);
-		book.setSubmitTime(submitTime);
-		book.setBrowseNum(0);
-		resourceService.saveBook(book);
-		//返回保存成功提示
-		Map map = new HashMap();
-		map.put("isSuccess", true);
-		map.put("msg", "保存成功");
-		String bookJson = JSON.toJSONString(map,SerializerFeature.DisableCircularReferenceDetect);
-		HttpServletResponse response=ServletActionContext.getResponse();  
-		response.setContentType("text/html;charset=utf-8");
-		PrintWriter out = response.getWriter();  
-	    out.println(bookJson);  
-	    out.flush();  
-	    out.close();
+		try{
+			String pathString=ServletActionContext.getServletContext().getRealPath("/");
+			//String[] path = pathString.split("StudyWebsite");
+			System.out.println("pathString = " + pathString);//获得项目路径
+			String filepathString= pathString + "upload";//文件存储路径
+			//构建文件对象
+			File folder=new File(filepathString);
+			//检测文件夹是否存在，如果不存在，则新建upload目录
+			if(!folder.exists()){
+			    folder.mkdir();
+			}
+			System.out.println("filepathstring = "+filepathString);
+			
+			//随机生成图书封面、附件名称
+			fileFileName = getRandomString(10) + fileFileName;//图书封面名称
+			file1FileName = getRandomString(10) + file1FileName;//图书附件名称
+			//图书封面存储
+			FileInputStream inputStream = new FileInputStream(this.getFile());
+	        FileOutputStream outputStream = new FileOutputStream(filepathString + "\\" + fileFileName);
+	        byte[] buf = new byte[4096];
+	        int length = 0;
+	        while ((length = inputStream.read(buf)) != -1) {
+	            outputStream.write(buf, 0, length);
+	        }
+	        //图书附件存储
+	        inputStream = new FileInputStream(this.getFile1());
+	        outputStream = new FileOutputStream(filepathString + "\\" + file1FileName);
+	        while ((length = inputStream.read(buf)) != -1) {
+	            outputStream.write(buf, 0, length);
+	        }
+	        inputStream.close();
+	        outputStream.flush();
+			
+	        //图书封面、附件名称存储
+			String bookPhotoAddr = fileFileName;
+			String bookAttachmentAddr = file1FileName;
+			
+			book.setBookPhotoAddr(bookPhotoAddr);
+			book.setBookAttachmentAddr(bookAttachmentAddr);
+			Date date = new Date();
+			String submitTime = new SimpleDateFormat("yyyy-MM-dd").format(date);
+			book.setSubmitTime(submitTime);
+			book.setBrowseNum(0);
+			resourceService.saveBook(book);
+			//返回保存成功提示
+			Map map = new HashMap();
+			map.put("isSuccess", true);
+			map.put("msg", "保存成功");
+			String bookJson = JSON.toJSONString(map,SerializerFeature.DisableCircularReferenceDetect);
+			HttpServletResponse response=ServletActionContext.getResponse();  
+			response.setContentType("text/html;charset=utf-8");
+			PrintWriter out = response.getWriter();  
+		    out.println(bookJson);  
+		    out.flush();  
+		    out.close();
+		}catch (Exception e) {
+			e.printStackTrace();
+			Map map = new HashMap();
+			map.put("isSuccess", false);
+			map.put("msg", "保存失败，文件超出最大限制");
+			String bookJson = JSON.toJSONString(map,SerializerFeature.DisableCircularReferenceDetect);
+			HttpServletResponse response=ServletActionContext.getResponse();  
+			response.setContentType("text/html;charset=utf-8");
+			PrintWriter out = response.getWriter();  
+		    out.println(bookJson);  
+		    out.flush();  
+		    out.close();
+		}
+	}
+	//获取一条随机字符串
+	public String getRandomString(int length) { //length表示生成字符串的长度  
+		String base = "abcdefghijklmnopqrstuvwxyz0123456789";     
+		Random random = new Random();     
+		StringBuffer sb = new StringBuffer();     
+		for (int i = 0; i < length; i++) {     
+			int number = random.nextInt(base.length());     
+			sb.append(base.charAt(number));     
+		}     
+		return sb.toString();     
 	}
 
 	// 删除书
