@@ -86,9 +86,6 @@ public class UserAction extends ActionSupport implements ServletRequestAware{
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public void register() throws Exception{
 		String username = user.getUsername();
-		System.out.println(username);
-		System.out.println(user.getPassword());
-		System.out.println(user.getEmail());
 		
 		Map map = new HashMap();
 		UserInfo user1 = userService.findUserByUsername(username);

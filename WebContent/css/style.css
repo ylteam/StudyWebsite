@@ -611,23 +611,7 @@ fieldset#body {
 	-webkit-apperance: none;
 	font-family: 'Open Sans', sans-serif;
 }
-/* Sign In Button */
-#loginForm #login {
-	font-family: 'Open Sans', sans-serif;
-	width: auto;
-	float: left;
-	background: #ff6978;
-	color: #fff;
-	font-size: 0.8725em;
-	padding: 8px 20px;
-	border: none;
-	margin: 0 12px 0 0;
-	cursor: pointer;
-	transition: all .5s;
-	-webkit-transition: all .5s;
-	-moz-transition: all .5s;
-	-o-transition: all .5s;
-}
+
 
 #loginForm #login:hover {
 	background: #00405d;

@@ -6,3 +6,17 @@ body{
 .container{
 	opacity:0.95
 }
+
+.input-group{
+	margin-bottom:20px
+}
+
+.commentCol{
+	font-size: 20px;
+}
+
+.nametime{
+	vertical-align:bottom;
+	text-align:right;
+	color:#635757;
+}

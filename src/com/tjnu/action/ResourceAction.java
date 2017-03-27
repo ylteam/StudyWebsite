@@ -179,6 +179,7 @@ public class ResourceAction extends ActionSupport implements ServletRequestAware
 				browseRecord.setPersonBrowseNum(personBrowseNum + 1);
 				resourceService.updateBrowseRecord(browseRecord);
 			} else {// 若该用户对该文章的没有浏览过，保存浏览记录
+				browseRecord = new BrowseRecord();
 				browseRecord.setResourceId(resourceId);
 				browseRecord.setUsername(username);
 				browseRecord.setResourceType("0");
@@ -210,6 +211,7 @@ public class ResourceAction extends ActionSupport implements ServletRequestAware
 				browseRecord.setPersonBrowseNum(personBrowseNum + 1);
 				resourceService.updateBrowseRecord(browseRecord);
 			} else {// 若该用户对该图书的没有浏览过，保存浏览记录
+				browseRecord = new BrowseRecord();
 				browseRecord.setResourceId(bookId);
 				browseRecord.setUsername(username);
 				browseRecord.setResourceType("1");
@@ -232,18 +234,11 @@ public class ResourceAction extends ActionSupport implements ServletRequestAware
 	// 保存评论
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public void saveComment() throws IOException {
-		String resourceIdStr = request.getParameter("resourceId");
-		int resourceId = Integer.parseInt(resourceIdStr);
-		String resourceType = request.getParameter("resourceType");// 0文章或1图书
-		String commentContent = request.getParameter("commentContent");
 		UserInfo user = (UserInfo) request.getSession().getAttribute("currentUser");
 		Map map = new HashMap();
 		if (user != null) {// 当前为用户登录状态
 			String username = user.getUsername();
-			comment.setResourceId(resourceId);
 			comment.setUsername(username);
-			comment.setResourceType(resourceType);
-			comment.setCommentContent(commentContent);
 			Date date = new Date();
 			String submitTime = new SimpleDateFormat("yyyy-MM-dd").format(date);
 			comment.setSubmitTime(submitTime);

@@ -38,7 +38,7 @@
 												<label for="password">密码</label> 
 												<input type="password" id="password">
 											</fieldset>
-											<input type="submit" class="btn btn-primary" id="login" value="登录">
+											<button class="btn btn-primary" id="login">登录</button>
 										</fieldset>
 										<span id="errorMsg"></span>
 									</div>
