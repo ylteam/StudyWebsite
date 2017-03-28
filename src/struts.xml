@@ -21,6 +21,11 @@
     		<result name="showArticleDetail_success">/jsp/articledetail.jsp</result>
     		<result name="showBookDetail_success">/jsp/bookdetail.jsp</result>
     		<result name="showBookDetail_error">/jsp/home.jsp</result>
+    		
+    		<result name="reviseArticleDetail_success">/jsp/reviseArticle.jsp</result>
+    		<result name="reviseArticleDetail_error">/jsp/home.jsp</result>
+    		<result name="reviseBookDetail_success">/jsp/reviseBook.jsp</result>
+    		<result name="reviseBookDetail_error">/jsp/home.jsp</result>
     	</action>
     </package>
       

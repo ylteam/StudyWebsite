@@ -364,8 +364,24 @@ public class ResourceAction extends ActionSupport implements ServletRequestAware
 	}
 
 	// 删除文章
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public void deleteResource() throws IOException {
-		resourceService.deleteResource(resource);
+		String resourceIdStr = request.getParameter("resourceId");
+		int resourceId = Integer.parseInt(resourceIdStr);
+		ResourceInfo article = new ResourceInfo();
+		article.setResourceId(resourceId);
+		resourceService.deleteResource(article);
+		//返回删除成功提示
+		Map map = new HashMap();
+		map.put("isSuccess", true);
+		map.put("msg", "删除成功");
+		String resourceJson = JSON.toJSONString(map,SerializerFeature.DisableCircularReferenceDetect);
+		HttpServletResponse response=ServletActionContext.getResponse();  
+		response.setContentType("text/html;charset=utf-8");
+		PrintWriter out = response.getWriter();  
+		out.println(resourceJson);  
+		out.flush();  
+		out.close();
 	}
 
 	// 查询文章----显示全部还是？看前台需要什么数据，是条件查询，还是分页显示全部---可使用上面的根据题目查找方法
@@ -373,29 +389,38 @@ public class ResourceAction extends ActionSupport implements ServletRequestAware
 
 	}
 
-	// 修改更新文章内容----未写完，看前台传什么参数过来
+	//文章修改页面详情展示
+	public String reviseArticleDetail() throws IOException {
+		String resourceIdStr = request.getParameter("resourceId");
+		int resourceId = Integer.parseInt(resourceIdStr);
+		resource = resourceService.findResourceById(resourceId);
+		if (null != resource) {
+			request.setAttribute("article", resource);
+			return "reviseArticleDetail_success";
+		} else {
+			return "reviseArticleDetail_error";
+		}
+	}
+	
+	// 修改更新文章内容
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public void updateResource() throws IOException {
-		String resourceIdStr = request.getParameter("resourceId");
-		String articleTitle = request.getParameter("articleTitle");
-		String articleAuthor = request.getParameter("articleAuthor");
-		String publishTime = request.getParameter("publishTime");
-		String articleContent = request.getParameter("articleContent");
-		int resourceId = Integer.parseInt(resourceIdStr);
-		resource.setResourceId(resourceId);
-		resource.setArticleTitle(articleTitle);
-		resource.setArticleAuthor(articleAuthor);
-		resource.setPublishTime(publishTime);
-		resource.setArticleContent(articleContent);
+		int resourceId = resource.getResourceId();
 		ResourceInfo res = resourceService.findResourceById(resourceId);
-		resource.setSubmitTime(res.getSubmitTime());
-		int browseNum = res.getBrowseNum();
-		resource.setBrowseNum(browseNum);
-		resourceService.updateResource(resource);
-		//返回修改成功提示
 		Map map = new HashMap();
-		map.put("isSuccess", true);
-		map.put("msg", "修改保存成功");
+		if(res != null){
+			res.setArticleTitle(resource.getArticleTitle());
+			res.setArticleAuthor(resource.getArticleAuthor());
+			res.setPublishTime(resource.getPublishTime());
+			res.setArticleContent(resource.getArticleContent());
+			resourceService.updateResource(res);
+			//返回修改成功提示
+			map.put("isSuccess", true);
+			map.put("msg", "修改保存成功");
+		}else{
+			map.put("isSuccess", false);
+			map.put("msg", "修改保存失败");
+		}
 		String resourceJson = JSON.toJSONString(map,SerializerFeature.DisableCircularReferenceDetect);
 		HttpServletResponse response=ServletActionContext.getResponse();  
 		response.setContentType("text/html;charset=utf-8");
@@ -490,8 +515,24 @@ public class ResourceAction extends ActionSupport implements ServletRequestAware
 	}
 
 	// 删除书
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public void deleteBook() throws IOException {
-		resourceService.deleteBook(book);
+		String bookIdStr = request.getParameter("bookId");
+		int bookId = Integer.parseInt(bookIdStr);
+		BookInfo bo = new BookInfo();
+		bo.setBookId(bookId);
+		resourceService.deleteBook(bo);
+		//返回删除成功提示
+		Map map = new HashMap();
+		map.put("isSuccess", true);
+		map.put("msg", "删除成功");
+		String bookJson = JSON.toJSONString(map,SerializerFeature.DisableCircularReferenceDetect);
+		HttpServletResponse response=ServletActionContext.getResponse();  
+		response.setContentType("text/html;charset=utf-8");
+		PrintWriter out = response.getWriter();  
+	    out.println(bookJson);  
+	    out.flush();  
+	    out.close();
 	}
 
 	// 查询书---可使用上面的根据题目查找方法
@@ -499,35 +540,42 @@ public class ResourceAction extends ActionSupport implements ServletRequestAware
 
 	}
 
-	// 修改更新书内容----未写完，看前台传什么参数过来
+	//图书修改页面详情展示
+	public String reviseBookDetail() throws IOException {
+		String bookIdStr = request.getParameter("bookId");
+		int bookId = Integer.parseInt(bookIdStr);
+		book = resourceService.findBookById(bookId);
+		if (book.getBookPhotoAddr() == null || "".equals(book.getBookPhotoAddr())) {
+			book.setBookPhotoAddr("nocover.jpg");
+		}
+		if (null != book) {
+			request.setAttribute("book", book);
+			return "reviseBookDetail_success";
+		} else {
+			return "reviseBookDetail_error";
+		}
+	}
+	
+	// 修改更新书内容
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public void updateBook() throws IOException {
-		String bookIdStr = request.getParameter("bookId");
-		String bookTitle = request.getParameter("bookTitle");
-		String bookAuthor = request.getParameter("bookAuthor");
-		String publishTime = request.getParameter("publishTime");
-		String isbnNum = request.getParameter("isbnNum");
-		String bookContent = request.getParameter("bookContent");
-		String bookPhotoAddr = request.getParameter("bookPhotoAddr");
-		String bookAttachmentAddr = request.getParameter("bookAttachmentAddr");
-		int bookId = Integer.parseInt(bookIdStr);
-		book.setBookId(bookId);
-		book.setBookTitle(bookTitle);
-		book.setBookAuthor(bookAuthor);
-		book.setPublishTime(publishTime);
-		book.setIsbnNum(isbnNum);
-		book.setBookContent(bookContent);
-		book.setBookPhotoAddr(bookPhotoAddr);
-		book.setBookAttachmentAddr(bookAttachmentAddr);
+		int bookId = book.getBookId();
 		BookInfo bo = resourceService.findBookById(bookId);
-		book.setSubmitTime(bo.getSubmitTime());
-		int browseNum = bo.getBrowseNum();
-		book.setBrowseNum(browseNum);
-		resourceService.updateBook(book);
-		//返回修改成功提示
 		Map map = new HashMap();
-		map.put("isSuccess", true);
-		map.put("msg", "修改保存成功");
+		if(bo != null){
+			bo.setBookTitle(book.getBookTitle());
+			bo.setBookAuthor(book.getBookAuthor());
+			bo.setPublishTime(book.getPublishTime());
+			bo.setIsbnNum(book.getIsbnNum());
+			bo.setBookContent(book.getBookContent());
+			resourceService.updateBook(bo);
+			//返回修改成功提示
+			map.put("isSuccess", true);
+			map.put("msg", "修改保存成功");
+		}else{
+			map.put("isSuccess", false);
+			map.put("msg", "修改保存失败");
+		}
 		String bookJson = JSON.toJSONString(map,SerializerFeature.DisableCircularReferenceDetect);
 		HttpServletResponse response=ServletActionContext.getResponse();  
 		response.setContentType("text/html;charset=utf-8");
