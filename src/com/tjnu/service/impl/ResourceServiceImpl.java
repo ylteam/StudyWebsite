@@ -159,7 +159,7 @@ public class ResourceServiceImpl implements IResourceService {
 	//根据资源id、资源type查找所有评论
 	@Override
 	public List<Comment> findAllCommentByResourceId(int resourceId, String resourceType) {
-		return commentDao.find("from Comment c where c.resourceId=? and c.resourceType=? order by submitTime desc", new Object[]{resourceId, resourceType});
+		return commentDao.find("from Comment c where c.resourceId=? and c.resourceType=? order by commentId desc", new Object[]{resourceId, resourceType});
 	}
 
 	//保存新增浏览记录

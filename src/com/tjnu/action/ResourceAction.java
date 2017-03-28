@@ -311,10 +311,10 @@ public class ResourceAction extends ActionSupport implements ServletRequestAware
 	
 	// 根据id和type查询评论
 	public void showComment() throws IOException {
-		String commentIdStr = request.getParameter("commentId");
+		String resourceIdStr = request.getParameter("resourceId");
 		String resourceType = request.getParameter("resourceType");
-		int commentId = Integer.parseInt(commentIdStr);
-		List<Comment> list = resourceService.findAllCommentByResourceId(commentId, resourceType);
+		int resourceId = Integer.parseInt(resourceIdStr);
+		List<Comment> list = resourceService.findAllCommentByResourceId(resourceId, resourceType);
 		String commentJson = JSON.toJSONString(list,SerializerFeature.DisableCircularReferenceDetect);
 		HttpServletResponse response=ServletActionContext.getResponse();  
 		response.setContentType("text/html;charset=utf-8");

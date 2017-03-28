@@ -29,8 +29,7 @@
 						class="code">出版日期：</span>${book.publishTime}<br /> <br /> <span
 						class="code">阅读量：</span>${book.browseNum}<br /> <br />
 					<div class="btn btn-default">
-						<a id="addToCart-btn"> <label class="glyphicon glyphicon-book"></label>&nbsp;点此阅读或下载
-						</a>
+						<a id="addToCart-btn"> <label class="glyphicon glyphicon-book"></label>&nbsp;点此阅读或下载</a>
 					</div>
 				</div>
 			</div>
@@ -42,19 +41,17 @@
 		</div>
 
 		<div class="input-group">
-			<input id="commentText" type="text" class="form-control" placeholder="我也说两句">
-			<span class="input-group-btn">
+			<input id="commentText" type="text" class="form-control"
+				placeholder="我也说两句"> <span class="input-group-btn">
 				<button id="sendCommentBtn" class="btn btn-default" type="button">发表评论</button>
 			</span>
 		</div>
 
 		<div class="panel panel panel-info">
-			<div class="panel-heading">累计评价</div>
-			<div class="table-responsive">
-				<table class="table">
-					<tr><td class="col-md-9 commentCol">还不错啊</td><td class="nametime">hello发表于2017-3-21</td></tr>
-				</table>
-			</div>
+			<div class="panel-heading" id="commentPanelHead"></div>
+			<ul class="list-group" id="commentList">
+				<!-- js添加 -->
+			</ul>
 		</div>
 	</div>
 </body>

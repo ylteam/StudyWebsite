@@ -138,5 +138,9 @@ public class UserAction extends ActionSupport implements ServletRequestAware{
 	public void setServletRequest(HttpServletRequest request) {
 		this.request=request;
 	}
+	
+	public String toManagerCenter() {
+		return "manager_center";
+	}
 
 }

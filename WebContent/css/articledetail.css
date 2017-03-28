@@ -7,6 +7,18 @@ body{
 	opacity:0.95
 }
 
+.articleInfo{
+	text-align:center
+}
+
+.articleTitle{
+	font-size:30px;
+}
+
+.articleContent{
+	font-size:20px;
+}
+
 .input-group{
 	margin-bottom:20px
 }
