@@ -167,10 +167,27 @@ public class ResourceServiceImpl implements IResourceService {
 	public void saveBrowseRecord(BrowseRecord browseRecord) {
 		browseRecordDao.save(browseRecord);
 	}
-	//根据用户名查找所有浏览记录
+	//根据用户名查找所有文章浏览记录
 	@Override
-	public List<BrowseRecord> findAllBrowseRecordByUsername(String username) {
-		return browseRecordDao.find("from BrowseRecord b where b.username=? order by personBrowseNum desc", new Object[]{username});
+	public void findResourseBrowseRecordByUsername(String username, String resourceType, Page<ResourceInfo> resourcePage) {
+		String hql = "from ResourceInfo r, BrowseRecord b where r.resourceId=b.resourceId and b.username=? and b.resourceType=? order by b.personBrowseNum desc";
+		String countHql = "select count(*) from ResourceInfo r, BrowseRecord b where r.resourceId=b.resourceId and b.username=? and b.resourceType=?";
+		Object[] param = new Object[]{username,resourceType};
+		List<ResourceInfo> list = resourceDao.find(hql, param, resourcePage.getCurrentPage(), resourcePage.getPageSize());
+		resourcePage.setPageList(list);
+		long ti = resourceDao.count(countHql, param);
+		resourcePage.setTotleNumber((int)ti);
+	}
+	//根据用户名查找所有图书浏览记录
+	@Override
+	public void findBookBrowseRecordByUsername(String username, String resourceType, Page<BookInfo> bookPage) {
+		String hql = "from BookInfo bo, BrowseRecord b where bo.bookId=b.resourceId and b.username=? and b.resourceType=? order by b.personBrowseNum desc";
+		String countHql = "select count(*) from BookInfo bo, BrowseRecord b where bo.bookId=b.resourceId and b.username=? and b.resourceType=?";
+		Object[] param = new Object[]{username,resourceType};
+		List<BookInfo> list = bookDao.find(hql, param, bookPage.getCurrentPage(), bookPage.getPageSize());
+		bookPage.setPageList(list);
+		long ti = bookDao.count(countHql, param);
+		bookPage.setTotleNumber((int)ti);
 	}
 	//根据用户名、资源id、资源type查找该用户是否存在对该资源的浏览记录
 	@Override
