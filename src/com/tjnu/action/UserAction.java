@@ -139,8 +139,16 @@ public class UserAction extends ActionSupport implements ServletRequestAware{
 		this.request=request;
 	}
 	
-	public String toManagerCenter() {
-		return "manager_center";
+	public String toCenter() {
+		UserInfo user = (UserInfo) request.getSession().getAttribute("currentUser");
+		if(user == null){
+			return "login_timeout";
+		}else if(user.getUserType()=="0"){
+			return "manager_center";
+		}else{
+			return "user_center";
+		}
+		
 	}
 
 }

@@ -47,7 +47,7 @@
 						</div>
 					</div>
 					<div class="log" ${sessionScope.currentUser == null?'hidden':''}>
-						<a href=""><span>${sessionScope.currentUser.username}</span></a>
+						<a href="user_toCenter.action"><span>${sessionScope.currentUser.username}</span></a>
 					</div>
 					<div class="reg" ${sessionScope.currentUser==null?'':'hidden'}>
 						<a href="user_toRegister.action">注册</a>
