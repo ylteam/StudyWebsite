@@ -48,7 +48,10 @@ public interface IResourceService {
 	
 	public void saveBrowseRecord(BrowseRecord browseRecord);
 	
-	public List<BrowseRecord> findAllBrowseRecordByUsername(String username);
+	void findResourseBrowseRecordByUsername(String username, String resourceType,
+			Page<ResourceInfo> resourcePage);
+
+	void findBookBrowseRecordByUsername(String username, String resourceType, Page<BookInfo> bookPage);
 	
 	BrowseRecord findBrowseRecordByUsernameAndResourceId(String username, int resourceId, String resourceType);
 	

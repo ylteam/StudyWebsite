@@ -35,7 +35,7 @@ import com.tjnu.model.UserInfo;
 import com.tjnu.service.IResourceService;
 @Controller
 public class ResourceAction extends ActionSupport implements ServletRequestAware {
-//个人浏览记录、上传书的图片、上传文件还未做
+
 	private static final long serialVersionUID = 1L;
 
 	private HttpServletRequest request;
@@ -331,7 +331,36 @@ public class ResourceAction extends ActionSupport implements ServletRequestAware
 
 	// 用户浏览记录
 	public void showPersonalBrowseRecord() throws IOException {
-
+		String pageSizeStr = request.getParameter("pageSize");
+		String curPageStr = request.getParameter("curPage");
+		String resourceType = request.getParameter("resourceType");
+		int pageSize = Integer.parseInt(pageSizeStr);
+		int curPage = Integer.parseInt(curPageStr);
+		UserInfo user = (UserInfo) request.getSession().getAttribute("currentUser");
+		//String username = user.getUsername();
+		String username = "admin";
+		String resourcePageJson;
+		if("0".equals(resourceType)){
+			Page<ResourceInfo> resourcePage = new Page<ResourceInfo>(pageSize, curPage);
+			resourceService.findResourseBrowseRecordByUsername(username, resourceType, resourcePage);
+			resourcePageJson = JSON.toJSONString(resourcePage, SerializerFeature.DisableCircularReferenceDetect);
+			HttpServletResponse response = ServletActionContext.getResponse();
+			response.setContentType("text/html;charset=utf-8");
+			PrintWriter out = response.getWriter();
+			out.println(resourcePageJson);
+			out.flush();
+			out.close();
+		}else{
+			Page<BookInfo> resourcePage = new Page<BookInfo>(pageSize, curPage);
+			resourceService.findBookBrowseRecordByUsername(username, resourceType, resourcePage);
+			resourcePageJson = JSON.toJSONString(resourcePage, SerializerFeature.DisableCircularReferenceDetect);
+			HttpServletResponse response = ServletActionContext.getResponse();
+			response.setContentType("text/html;charset=utf-8");
+			PrintWriter out = response.getWriter();
+			out.println(resourcePageJson);
+			out.flush();
+			out.close();
+		}
 	}
 
 	// 管理员新增文章

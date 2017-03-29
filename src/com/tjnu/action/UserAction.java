@@ -113,21 +113,27 @@ public class UserAction extends ActionSupport implements ServletRequestAware{
 	//重置密码
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public void repassword() throws IOException {
-		String username = request.getParameter("username");
-		String password = request.getParameter("password");
-		String rePassword = request.getParameter("rePassword");
-		user.setUsername(username);
-		user.setPassword(password);
-		UserInfo cutUser=userService.findUserByNameAndPassword(user);
+		UserInfo currentUser = (UserInfo) request.getSession().getAttribute("currentUser");
 		Map map = new HashMap();
-		if(null != cutUser){
-			cutUser.setPassword(rePassword);
-			userService.updateUser(cutUser);
-			map.put("isSuccess", true);
-			map.put("msg", "密码重置成功");
+		if(currentUser != null){
+			String username = currentUser.getUsername();
+			String password = request.getParameter("curPassword");
+			String rePassword = request.getParameter("newPassword");
+			currentUser.setUsername(username);
+			currentUser.setPassword(password);
+			UserInfo cutUser=userService.findUserByNameAndPassword(currentUser);
+			if(null != cutUser){
+				cutUser.setPassword(rePassword);
+				userService.updateUser(cutUser);
+				map.put("isSuccess", true);
+				map.put("msg", "密码重置成功");
+			}else{
+				map.put("isSuccess", false);
+				map.put("msg", "当前密码错误");
+			}
 		}else{
 			map.put("isSuccess", false);
-			map.put("msg", "原始密码错误");
+			map.put("msg", "用户超时，请重新登录");
 		}
 		String userJson = JSON.toJSONString(map,SerializerFeature.DisableCircularReferenceDetect);
 		HttpServletResponse response=ServletActionContext.getResponse();  
