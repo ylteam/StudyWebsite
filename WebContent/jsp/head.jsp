@@ -49,11 +49,11 @@
 					<div class="log" ${sessionScope.currentUser == null?'hidden':''}>
 						<a href="user_toCenter.action"><span>${sessionScope.currentUser.username}</span></a>
 					</div>
-					<div class="reg" ${sessionScope.currentUser==null?'':'hidden'}>
-						<a href="user_toRegister.action">注册</a>
+					<div class="log" ${sessionScope.currentUser==null?'':'hidden'}>
+						&nbsp;&nbsp;<a href="user_toRegister.action">注册</a>
 					</div>
-					<div class="reg" ${sessionScope.currentUser==null?'hidden':''}>
-						<a href="user_logout.action">退出</a>
+					<div class="log" ${sessionScope.currentUser==null?'hidden':''}>
+						&nbsp;&nbsp;<a href="user_logout.action">退出</a>
 					</div>
 
 					<div class="clearfix"></div>

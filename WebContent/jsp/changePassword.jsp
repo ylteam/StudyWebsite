@@ -5,14 +5,10 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>修改密码</title>
-<script type="text/javascript" src="js/jquery.min.js"></script>
-<script type="text/javascript" src="js/bootstrap.min.js"></script>
-<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
 <script type="text/javascript" src="js/changePassword.js"></script>
-<link href="css/style.css" rel='stylesheet' type='text/css' />
 </head>
 <body>
-	<form class="form-horizontal" method="post"">
+	<form class="form-horizontal" method="post">
 		<div class="form-group">
 			<label id="errormsg" class="col-md-offset-3 col-md-3 col-sm-offset-3 col-sm-3 control-label"></label>
 		</div>

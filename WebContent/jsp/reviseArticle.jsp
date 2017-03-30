@@ -5,46 +5,66 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>文章信息修改</title>
+
+<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+<link href="css/style.css" rel='stylesheet' type='text/css'>
+<link rel="stylesheet" type="text/css" href="css/revise.css">
+
 <script type="text/javascript" src="js/jquery.min.js"></script>
 <script type="text/javascript" src="js/bootstrap.min.js"></script>
-<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
-<script  type="text/javascript" language="javascript" src="js/My97DatePicker/WdatePicker.js"></script>
-<link rel="stylesheet" type="text/css" href="css/publish.css">
+<script type="text/javascript" language="javascript" src="js/My97DatePicker/WdatePicker.js"></script>
+<script type="text/javascript" src="editor/ckeditor.js"></script>
 <script type="text/javascript" src="js/revise.js"></script>
-<link href="css/style.css" rel='stylesheet' type='text/css' />
+
 </head>
 <body>
-	<form class="form-horizontal" method="post"">
-		<input type="hidden" class="form-control" id="resourceId" name="resource.resourceId" value="${resource.resourceId}">
-		<div class="form-group">
-			<label for="articleTitle" class="col-md-3 col-sm-3 control-label"><span class="spanStyle">*</span>文章标题：</label>
-		    <div class="col-md-8 col-sm-8">
-		    	<input type="text" class="form-control" id="articleTitle" name="resource.articleTitle" value="${resource.articleTitle}" required="required">
-		    </div>
+	<div class='container'>
+		<jsp:include page="head.jsp"></jsp:include>
+		<div class="panel panel-info">
+			<div class="panel-heading">修改文章信息</div>
+			<div class="panel-body">
+				<form class="form-horizontal">
+					<input type="hidden" class="form-control" id="resourceId"
+						name="resource.resourceId" value="${resource.resourceId}">
+					<div class="form-group">
+						<label for="articleTitle" class="col-md-2 control-label"><span
+							class="spanStyle">*</span>文章标题：</label>
+						<div class="col-md-9">
+							<input type="text" class="form-control" id="articleTitle"
+								name="resource.articleTitle" value="${resource.articleTitle}">
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="articleAuthor" class="col-md-2 control-label"><span
+							class="spanStyle">*</span>作者：</label>
+						<div class="col-md-9">
+							<input type="text" class="form-control" id="articleAuthor"
+								name="resource.articleAuthor" value="${resource.articleAuthor}">
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="publishTime" class="col-md-2 control-label"><span
+							class="spanStyle">*</span>出版日期：</label>
+						<div class="col-md-9">
+							<input type="text" class="form-control" id="publishTime"
+								name="resource.publishTime"
+								onfocus="WdatePicker({maxDate:new Date()})"
+								value="${resource.publishTime}" readonly>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="articleContent"
+							class="col-md-2 control-label"><span
+							class="spanStyle">*</span>文章内容：</label>
+						<div class="col-md-9">
+							<textarea name="editor01" id="articleEditor">${resource.articleContent}</textarea>
+        					<script type="text/javascript">CKEDITOR.replace('editor01');</script>
+						</div>
+					</div>
+				</form>
+				<button id="reviseResourceBtn" class="btn btn-primary col-md-offset-4 col-md-4">确认修改</button>
+			</div>
 		</div>
-		<div class="form-group">
-			<label for="articleAuthor" class="col-md-3 col-sm-3 control-label"><span class="spanStyle">*</span>作者：</label>
-		    <div class="col-md-8 col-sm-8">
-		    	<input type="text" class="form-control" id="articleAuthor" name="resource.articleAuthor" value="${resource.articleAuthor}" required="required">
-		    </div>
-		</div>
-		<div class="form-group">
-			<label for="publishTime" class="col-md-3 col-sm-3 control-label"><span class="spanStyle">*</span>出版日期：</label>
-		    <div class="col-md-8 col-sm-8">
-		    	<input type="text" class="form-control" id="publishTime" name="resource.publishTime" onfocus="WdatePicker({maxDate:new Date()})" value="${resource.publishTime}" required="required"/>
-		    </div>
-		</div>
-		<div class="form-group">
-			<label for="articleContent" class="col-md-3 col-sm-3 control-label"><span class="spanStyle">*</span>图书简介：</label>
-		    <div class="col-md-8 col-sm-8">
-		    	<textarea class="form-control" rows="6" cols="" id="articleContent" name="resource.articleContent" style="resize: none;" required="required">${resource.articleContent}</textarea>
-		    </div>
-		</div>
-		<div class="form-group">
-		    <div class="col-md-offset-4 col-md-4 col-sm-offset-4 col-sm-4">
-		    	<input id="reviseResourceBtn" class="btn btn-primary col-md-12 col-sm-12" type="button" value="提交">
-		    </div>
-	  </div>
-	</form>
+	</div>
 </body>
 </html>

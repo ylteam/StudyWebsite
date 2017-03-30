@@ -19,7 +19,7 @@
 			<div class="panel-heading">书籍详情</div>
 			<div class="panel-body">
 				<div class="grid images_3_of_2">
-					<img src="img/covers/${book.bookPhotoAddr}" />
+					<img src="upload/covers/${book.bookPhotoAddr}" />
 				</div>
 				<div class="desc1 span_3_of_2">
 
@@ -29,7 +29,7 @@
 						class="code">出版日期：</span>${book.publishTime}<br /> <br /> <span
 						class="code">阅读量：</span>${book.browseNum}<br /> <br />
 					<div class="btn btn-default">
-						<a id="addToCart-btn"> <label class="glyphicon glyphicon-book"></label>&nbsp;点此阅读或下载</a>
+						<a href="" id="addToCart-btn"> <label class="glyphicon glyphicon-book"></label>&nbsp;点此阅读或下载</a>
 					</div>
 				</div>
 			</div>

@@ -1,5 +1,5 @@
 $(function(){
-	$("#bookTab").click(function(){
+	$("#bookManageTab").click(function(){
 		getBookList(1,10);
 	})
 })

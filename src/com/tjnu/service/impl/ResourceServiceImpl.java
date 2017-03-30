@@ -58,7 +58,7 @@ public class ResourceServiceImpl implements IResourceService {
 	//查找全部资源
 	@Override
 	public void findAllList(Page<ResourceInfo> resourcePage) {
-		String hql = "from ResourceInfo r order by r.submitTime desc";
+		String hql = "from ResourceInfo r order by r.resourceId desc";
 		String countHql = "select count(*) from ResourceInfo";
 		Object[] param = null;
 		List<ResourceInfo> list = resourceDao.find(hql, param, resourcePage.getCurrentPage(), resourcePage.getPageSize());
@@ -118,7 +118,7 @@ public class ResourceServiceImpl implements IResourceService {
 	//查找全部书籍
 	@Override
 	public void findAllBookList(Page<BookInfo> bookPage) {
-		String hql = "from BookInfo b order by b.submitTime desc";
+		String hql = "from BookInfo b order by b.bookId desc";
 		String countHql = "select count(*) from BookInfo";
 		Object[] param = null;
 		List<BookInfo> list = bookDao.find(hql, param, bookPage.getCurrentPage(), bookPage.getPageSize());

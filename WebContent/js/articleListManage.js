@@ -1,7 +1,7 @@
 $(function(){
 	getArticleList(1,10);
 	
-	$("#articleTab").click(function(){
+	$("#articleManageTab").click(function(){
 		getArticleList(1, 10);
 	})
 })

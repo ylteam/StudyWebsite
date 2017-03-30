@@ -1,0 +1,12 @@
+.panel{
+	padding:0;
+}
+
+.panel-heading{
+	text-align:center;
+}
+
+.spanStyle{
+	font-size:14px;
+	color: #f00;
+}

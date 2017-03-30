@@ -149,10 +149,10 @@ public class UserAction extends ActionSupport implements ServletRequestAware{
 		UserInfo user = (UserInfo) request.getSession().getAttribute("currentUser");
 		if(user == null){
 			return "login_timeout";
-		}else if(user.getUserType()=="0"){
+		}else if("0".equals(user.getUserType())){
 			return "manager_center";
 		}else{
-			return "user_center";
+			return "student_center";
 		}
 		
 	}
