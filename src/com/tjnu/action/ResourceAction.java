@@ -151,9 +151,16 @@ public class ResourceAction extends ActionSupport implements ServletRequestAware
 		out.close();
 	}
 
+	// 用于根据题目查找跳转页面方法
+	public String headSearch() throws IOException {
+		String searchContent = request.getParameter("searchContent");
+		request.setAttribute("searchCont", searchContent);
+		return "headSearch_success";
+	}
+	
 	// 根据题目查找书
 	public void findBookByArticleTitle() throws IOException {
-		String bookTitle = request.getParameter("bookTitle");
+		String bookTitle = request.getParameter("searchContent");
 		String pageSizeStr = request.getParameter("pageSize");
 		String curPageStr = request.getParameter("curPage");
 		int pageSize = Integer.parseInt(pageSizeStr);
@@ -171,7 +178,7 @@ public class ResourceAction extends ActionSupport implements ServletRequestAware
 
 	// 根据题目查找文章
 	public void findArticleByArticleTitle() throws IOException {
-		String articleTitle = request.getParameter("articleTitle");
+		String articleTitle = request.getParameter("searchContent");
 		String pageSizeStr = request.getParameter("pageSize");
 		String curPageStr = request.getParameter("curPage");
 		int pageSize = Integer.parseInt(pageSizeStr);
