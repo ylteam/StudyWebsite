@@ -29,6 +29,8 @@
     		<result name="reviseArticleDetail_error">/jsp/home.jsp</result>
     		<result name="reviseBookDetail_success">/jsp/reviseBook.jsp</result>
     		<result name="reviseBookDetail_error">/jsp/home.jsp</result>
+    		
+    		<result name="headSearch_success">/jsp/headSearch.jsp</result>
     	</action>
     </package>
       

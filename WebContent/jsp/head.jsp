@@ -59,9 +59,9 @@
 					<div class="clearfix"></div>
 				</div>
 				<div class="search">
-					<form>
-						<input type="text" value="" placeholder="搜索..."> 
-						<input type="submit" value="">
+					<form method="post">
+						<input id="searchContent" type="text" placeholder="搜索..." value="${searchCont}"> 
+						<a id="searchBtn" target="_blank"><input id="headSearchBtn" type="button"></a>
 					</form>
 				</div>
 				<div class="clearfix"></div>
