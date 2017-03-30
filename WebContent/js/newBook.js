@@ -12,8 +12,6 @@
 	        url: "resource_saveBook.action",
 	        data: formData,
 	        success: function (data) {
-	        	alert("success123")
-	        	alert(data)
 	        	var obj = eval("("+data+")");
 	        	alert(obj.msg);
 	        }

@@ -73,8 +73,8 @@
 						<input type="file" id="bookAttachmentAddr" name="file1">
 					</div>
 				</div>
-				<button id="publishBookBtn" class="btn btn-primary col-md-offset-4 col-md-4 col-sm-offset-4 col-sm-4">提交</button>
 			</form>
+			<button id="publishBookBtn" class="btn btn-primary col-md-offset-4 col-md-4 col-sm-offset-4 col-sm-4">提交</button>
 		</div>
 	</div>
 </body>
