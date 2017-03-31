@@ -1,6 +1,18 @@
 ﻿$(function(){
 	
 	$("#publishBookBtn").click(function(){
+		var bookTitle = $.trim($("#bookTitle").val());
+		var bookAuthor = $.trim($("#bookAuthor").val());
+		var publishTime = $.trim($("#publishTime").val());
+		var isbnNum = $.trim($("#isbnNum").val());
+		var bookContent = $.trim($("#bookContent").val());
+		var bookPhoto = $("#bookPhoto").val();
+		var bookAttachment = $("#bookAttachment").val();
+		
+		if(bookTitle==""||bookAuthor==""||publishTime==""||isbnNum==""||bookContent==""||bookPhoto==""||bookAttachment==""){
+			alert("请将信息填写完整！")
+			return;
+		}
 		
 		var formData = new FormData($( "#uploadForm" )[0]);//使用FormData，进行Ajax请求并上传文件
 		$.ajax({
@@ -17,5 +29,4 @@
 	        }
 	    });
 	})
-	
 })

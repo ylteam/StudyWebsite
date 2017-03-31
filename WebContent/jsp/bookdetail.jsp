@@ -28,9 +28,7 @@
 					<span class="code">ISBN：</span>${book.isbnNum}<br /> <br /> <span
 						class="code">出版日期：</span>${book.publishTime}<br /> <br /> <span
 						class="code">阅读量：</span>${book.browseNum}<br /> <br />
-					<div class="btn btn-default">
-						<a href="" id="addToCart-btn"> <label class="glyphicon glyphicon-book"></label>&nbsp;点此阅读或下载</a>
-					</div>
+						<a href="upload/bookfiles/${book.bookAttachmentAddr }" target="_blank" class="btn btn-primary" > <label class="glyphicon glyphicon-book"></label>&nbsp;点此阅读或下载</a>
 				</div>
 			</div>
 		</div>

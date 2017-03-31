@@ -1,12 +1,12 @@
 $(function(){
 	
 	$("#publishArticleBtn").click(function(){
-		var articleTitle = $("#articleTitle").val();
-		var articleAuthor = $("#articleAuthor").val();
-		var publishTime = $("#publishTime").val();
+		var articleTitle = $.trim($("#articleTitle").val());
+		var articleAuthor = $.trim($("#articleAuthor").val());
+		var publishTime = $.trim($("#publishTime").val());
 		var articleContent = CKEDITOR.instances.articleEditor.getData();
 		if(articleTitle==""||articleAuthor==""||publishTime==""||articleContent==""){
-			alert("请将信息填写完整");
+			alert("请将信息填写完整!");
 			return;
 		}
 		$.post("resource_saveResource.action",{

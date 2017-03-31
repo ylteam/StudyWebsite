@@ -13,9 +13,7 @@ function getArticleList(pageNum, pageSize, searchContent){
 		var ps = pageEntity.pageSize;
 		var tn = pageEntity.totleNumber;
 		var tp = pageEntity.totlePage;
-		if(tn == 0){
-			alert("没有找到符合要求的文章")
-		}
+		$("#articlePanelHeading").html('“'+searchContent+'”文章查询结果');
 		var code="";
 		for(var i=0;i<pl.length;i++){
 			code += '<tr><th>'+((cp-1)*ps+i+1)+'</th>'
@@ -23,6 +21,10 @@ function getArticleList(pageNum, pageSize, searchContent){
 			'<td>'+pl[i].articleAuthor+'</td><td>'+pl[i].submitTime+'</td></tr>';
 		}
 		$("#articletablebody").empty().append(code);
+		
+		if(tn == 0){
+			$("#articletablebody").empty().append("<tr><td colspan='4'>没有找到符合要求的文章<td><tr>")
+		}
 		
 		$('#articleListPager').extendPagination({  
 			totalCount: tn,  
@@ -56,14 +58,18 @@ function getBookList(pageNum, pageSize, searchContent){
 		var ps = pageEntity.pageSize;
 		var tn = pageEntity.totleNumber;
 		var tp = pageEntity.totlePage;
-		if(tn == 0){
-			alert("没有找到符合要求的图书")
-		}
+		
+		$("#bookPanelHeading").html('“'+searchContent+'”图书查询结果');
+		
 		var code="";
 		for(var i=0;i<pl.length;i++){
 			code += '<tr><th>'+((cp-1)*ps+i+1)+'</th><td><a href="resource_showBookDetail.action?bookId='+pl[i].bookId+'" target="_blank">'+pl[i].bookTitle+'</a></td><td>'+pl[i].bookAuthor+'</td><td>'+pl[i].submitTime+'</td></tr>';
 		}
 		$("#booktablebody").empty().append(code);
+		if(tn == 0){
+			$("#booktablebody").empty().append("<tr><td colspan='4'>没有找到符合要求的图书</td></tr>")
+		}
+		
 		
 		$('#booklistPager').extendPagination({  
 	        totalCount: tn,  

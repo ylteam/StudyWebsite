@@ -19,7 +19,7 @@
 	<div class="container">
 		<jsp:include page="head.jsp"></jsp:include>
 		<div class="panel panel-info">
-			<div class="panel-heading">修改文章信息</div>
+			<div class="panel-heading">修改图书信息</div>
 			<div class="panel-body">
 				<form id="uploadForm" class="form-horizontal" enctype="multipart/form-data">
 					<input type="hidden" class="form-control" id="bookId" name="book.bookId" value="${book.bookId}">

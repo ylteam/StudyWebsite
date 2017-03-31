@@ -36,11 +36,11 @@
 	
 	//更新文章信息
 	$("#reviseResourceBtn").click(function(){
-		var resourceId = $("#resourceId").val();
-		var articleTitle = $("#articleTitle").val();
-		var articleAuthor = $("#articleAuthor").val();
-		var publishTime = $("#publishTime").val();
-		var articleContent = $("#articleContent").val();
+		var resourceId = $.trim($("#resourceId").val());
+		var articleTitle = $.trim($("#articleTitle").val());
+		var articleAuthor = $.trim($("#articleAuthor").val());
+		var publishTime = $.trim($("#publishTime").val());
+		var articleContent = CKEDITOR.instances.articleEditor.getData();
 		if(resourceId=="" || articleTitle=="" || articleAuthor=="" || publishTime=="" || articleContent==""){
 			alert("请将信息补充完整");
 			return false;

@@ -62,7 +62,7 @@
 					<label for="bookPhotoAddr" class="col-md-3 col-sm-3 control-label"><span
 						class="spanStyle">*</span>图书封面：</label>
 					<div class="col-md-8 col-sm-8">
-						<input type="file" id="bookPhotoAddr" name="file">
+						<input type="file" id="bookPhoto" name="file">
 					</div>
 				</div>
 				<div class="form-group">
@@ -70,7 +70,7 @@
 						class="col-md-3 col-sm-3 control-label"><span
 						class="spanStyle">*</span>上传文件：</label>
 					<div class="col-md-8 col-sm-8">
-						<input type="file" id="bookAttachmentAddr" name="file1">
+						<input type="file" id="bookAttachment" name="file1">
 					</div>
 				</div>
 			</form>
