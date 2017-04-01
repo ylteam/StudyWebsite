@@ -27,14 +27,14 @@
 						<label for="bookTitle" class="col-md-2 control-label"><span
 							class="spanStyle">*</span>图书标题：</label>
 						<div class="col-md-9">
-							<input type="text" class="form-control" id="bookTitle" name="book.bookTitle" value="${book.bookTitle}">
+							<input maxlength="50" type="text" class="form-control" id="bookTitle" name="book.bookTitle" value="${book.bookTitle}">
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="bookAuthor" class="col-md-2 control-label"><span
 							class="spanStyle">*</span>作者：</label>
 						<div class="col-md-9">
-							<input type="text" class="form-control" id="bookAuthor" name="book.bookAuthor" value="${book.bookAuthor}">
+							<input maxlength="20" type="text" class="form-control" id="bookAuthor" name="book.bookAuthor" value="${book.bookAuthor}">
 						</div>
 					</div>
 					<div class="form-group">
@@ -49,7 +49,7 @@
 						<label for="isbnNum" class="col-md-2 control-label"><span
 							class="spanStyle">*</span>ISBN号：</label>
 						<div class="col-md-9">
-							<input type="text" class="form-control" id="isbnNum"
+							<input maxlength="30" type="text" class="form-control" id="isbnNum"
 								name="book.isbnNum" value="${book.isbnNum}">
 						</div>
 					</div>
@@ -57,7 +57,7 @@
 						<label for="bookContent" class="col-md-2 control-label"><span
 							class="spanStyle">*</span>图书简介：</label>
 						<div class="col-md-9">
-							<textarea class="form-control" rows="6"  id="bookContent"
+							<textarea maxlength="4000" class="form-control" rows="6"  id="bookContent"
 								name="book.bookContent" style="resize: none;">${book.bookContent}</textarea>
 						</div>
 					</div>

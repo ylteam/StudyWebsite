@@ -30,7 +30,7 @@
 						<label for="articleTitle" class="col-md-2 control-label"><span
 							class="spanStyle">*</span>文章标题：</label>
 						<div class="col-md-9">
-							<input type="text" class="form-control" id="articleTitle"
+							<input maxlength="50" type="text" class="form-control" id="articleTitle"
 								name="resource.articleTitle" value="${resource.articleTitle}">
 						</div>
 					</div>
@@ -38,7 +38,7 @@
 						<label for="articleAuthor" class="col-md-2 control-label"><span
 							class="spanStyle">*</span>作者：</label>
 						<div class="col-md-9">
-							<input type="text" class="form-control" id="articleAuthor"
+							<input maxlength="20" type="text" class="form-control" id="articleAuthor"
 								name="resource.articleAuthor" value="${resource.articleAuthor}">
 						</div>
 					</div>

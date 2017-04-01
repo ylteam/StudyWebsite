@@ -39,7 +39,7 @@
 		</div>
 
 		<div class="input-group">
-			<input id="commentText" type="text" class="form-control"
+			<input maxlength="1000" id="commentText" type="text" class="form-control"
 				placeholder="我也说两句"> <span class="input-group-btn">
 				<button id="sendCommentBtn" class="btn btn-default" type="button">发表评论</button>
 			</span>

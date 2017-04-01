@@ -23,7 +23,7 @@
 					<label for="bookTitle" class="col-md-3 col-sm-3 control-label">
 						<span class="spanStyle">*</span>图书标题：</label>
 					<div class="col-md-8 col-sm-8">
-						<input type="text" class="form-control" id="bookTitle" 
+						<input maxlength="50" type="text" class="form-control" id="bookTitle" 
 						name="book.bookTitle" placeholder="图书标题">
 					</div>
 				</div>
@@ -31,14 +31,14 @@
 					<label for="bookAuthor" class="col-md-3 col-sm-3 control-label"><span
 						class="spanStyle">*</span>作者：</label>
 					<div class="col-md-3 col-sm-3">
-						<input type="text" class="form-control" id="bookAuthor"
+						<input maxlength="20" type="text" class="form-control" id="bookAuthor"
 							name="book.bookAuthor" placeholder="作者">
 					</div>
 					
 					<label for="publishTime" class="col-md-2 col-sm-2 control-label"><span
 						class="spanStyle">*</span>出版日期：</label>
 					<div class="col-md-3 col-sm-3">
-						<input type="text" class="form-control" id="publishTime" name="book.publishTime"
+						<input type="text" class="form-control nainput" id="bookPublishTime" name="book.publishTime"
 						placeholder="出版日期" onfocus="WdatePicker({maxDate:new Date()})" readonly>
 					</div>
 				</div>
@@ -47,14 +47,14 @@
 					<label for="isbnNum" class="col-md-3 col-sm-3 control-label"><span
 						class="spanStyle">*</span>ISBN号：</label>
 					<div class="col-md-8 col-sm-8">
-						<input type="text" class="form-control" id="isbnNum" name="book.isbnNum" placeholder="ISBN号">
+						<input maxlength="30" type="text" class="form-control" id="isbnNum" name="book.isbnNum" placeholder="ISBN号">
 					</div>
 				</div>
 				<div class="form-group">
 					<label for="bookContent" class="col-md-3 col-sm-3 control-label"><span
 						class="spanStyle">*</span>图书简介：</label>
 					<div class="col-md-8 col-sm-8">
-						<textarea class="form-control" rows="6" cols="" id="bookContent"
+						<textarea maxlength="4000" class="form-control" rows="6" cols="" id="bookContent"
 							name="book.bookContent" style="resize: none;" placeholder="图书简介......" ></textarea>
 					</div>
 				</div>

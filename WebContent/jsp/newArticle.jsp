@@ -18,12 +18,12 @@
 			<form class="form-horizontal">
 				<div class="form-group">
 					<div class="col-md-10 col-md-offset-1">
-						<input type="text" class="form-control nainput" id="articleTitle" placeholder="文章标题">
+						<input maxlength="50" type="text" class="form-control nainput" id="articleTitle" placeholder="文章标题">
 					</div>
 				</div>
 				<div class="form-group">
 					<div class="col-md-4 col-md-offset-1">
-						<input type="text" class="form-control nainput" id="articleAuthor"
+						<input maxlength="20" type="text" class="form-control nainput" id="articleAuthor"
 							name="resource.articleAuthor" placeholder="作者">
 					</div>
 					

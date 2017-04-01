@@ -23,32 +23,32 @@
 				<div class="registration_form">
 				<div id="registration_form">
 					<div>
-						<label> <input placeholder="用户名(必填)：" type="text" class="form-control" tabindex="1"
+						<label> <input maxlength="20" placeholder="用户名(必填)：" class="form-control" tabindex="1"
 							id="user-name"  autofocus>
 						</label>
 					</div>
 					<span class="errorMsg" id="usernameError"></span>
 					<div>
-						<label> <input placeholder="邮箱：" type="text" class="form-control" tabindex="3"
+						<label> <input maxlength="30" placeholder="邮箱：" class="form-control" tabindex="2"
 							id="user-email" >
 						</label>
 					</div>
 					<span class="errorMsg" id="emailError"></span>
 					<div>
-						<label> <input placeholder="手机：" type="text" class="form-control" tabindex="4"
+						<label> <input maxlength="20" placeholder="手机：" type="text" class="form-control" tabindex="3"
 							id="user-phone" >
 						</label>
 					</div>
 					<span class="errorMsg" id="phoneError"></span>
 					<div>
-						<label> <input placeholder="密码(必填)：" type="password" class="form-control"
-							id="user-password" tabindex="5" >
+						<label> <input maxlength="16" placeholder="密码(必填)：" type="password" class="form-control"
+							id="user-password" tabindex="4" >
 						</label>
 					</div>
 					<span class="errorMsg" id="pwdError"></span>
 					<div>
-						<label> <input placeholder="确认密码(必填)：" type="password" class="form-control"
-							id="con-password" tabindex="6" >
+						<label> <input maxlength="16" placeholder="确认密码(必填)：" type="password" class="form-control"
+							id="con-password" tabindex="5" >
 						</label>
 					</div>
 					<span class="errorMsg" id="conpwdError"></span>

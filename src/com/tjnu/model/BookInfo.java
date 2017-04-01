@@ -26,7 +26,7 @@ private static final long serialVersionUID = 1L;
 	private String bookAuthor;//作者
 	@Column(name = "publishTime", length = 20)
 	private String publishTime;//图书出版时间
-	@Column(name = "isbnNum", length = 20)
+	@Column(name = "isbnNum", length = 30)
 	private String isbnNum;//ISBN号
 	@Column(name = "bookContent", length = 8000)
 	private String bookContent;//图书简介

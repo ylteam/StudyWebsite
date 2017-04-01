@@ -54,7 +54,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						<label class="col-sm-2 control-label">密&nbsp;&nbsp;&nbsp;&nbsp;码</label>
 						<div class="col-sm-10">
 							<%-- <input type="password" class="form-control" name="user.password" id="password" value="${user.password}" placeholder="密码" maxlength="20"> --%>
-							<input type="password" class="form-control" name="user.password" id="password" placeholder="密码" maxlength="20">
+							<input type="password" class="form-control" name="user.password" id="password" placeholder="密码" maxlength="16">
 						</div>
 					</div>
 					<!-- <div class="form-group">

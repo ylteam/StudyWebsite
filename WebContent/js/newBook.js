@@ -3,7 +3,7 @@
 	$("#publishBookBtn").click(function(){
 		var bookTitle = $.trim($("#bookTitle").val());
 		var bookAuthor = $.trim($("#bookAuthor").val());
-		var publishTime = $.trim($("#publishTime").val());
+		var publishTime = $.trim($("#bookPublishTime").val());
 		var isbnNum = $.trim($("#isbnNum").val());
 		var bookContent = $.trim($("#bookContent").val());
 		var bookPhoto = $("#bookPhoto").val();
