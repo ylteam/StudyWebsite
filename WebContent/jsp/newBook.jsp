@@ -35,7 +35,7 @@
 							name="book.bookAuthor" placeholder="作者">
 					</div>
 					
-					<label for="publishTime" class="col-md-2 col-sm-2 control-label"><span
+					<label for="bookPublishTime" class="col-md-2 col-sm-2 control-label"><span
 						class="spanStyle">*</span>出版日期：</label>
 					<div class="col-md-3 col-sm-3">
 						<input type="text" class="form-control nainput" id="bookPublishTime" name="book.publishTime"
